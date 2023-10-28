@@ -3,11 +3,11 @@
 #include"index_last_odd.h"
 int index_last_odd(int arr[], int length)
 {
- int a;
+ int last_odd;
  for(int i=0;i<length;i++)
  {
   if(abs(arr[i])%2==1)
-  a = i;
+  last_odd = i;
  }
- return a;
+ return last_odd;
 }
