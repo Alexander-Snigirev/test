@@ -3,7 +3,8 @@
 
 AbilityManager::AbilityManager():rng(std::random_device{}())
 {
-    abilities.push(createRandomAbility());
+    AddSkill();
+    
 }
 
 
@@ -30,6 +31,18 @@ std::unique_ptr<Ability> AbilityManager::CreateAbility(SkillType skill)
 void AbilityManager::AddSkill()
 {
     abilities.push(createRandomAbility());
+
+    auto& skill = abilities.back();
+    if (auto dmg = dynamic_cast<DoubleDamage*>(skill.get())) {
+        sym_abilities.push_back('D');
+    }
+    else if (auto scn = dynamic_cast<Scanner*>(skill.get())) {
+        sym_abilities.push_back('S');
+    }
+    else if(auto scn = dynamic_cast<Bombardment*>(skill.get())){
+        sym_abilities.push_back('R');
+    }
+     
 }
 
 int AbilityManager::get_count(){
@@ -55,4 +68,53 @@ void AbilityManager::UseSkill(ShipManager& manager, GameField& field)
     }
     skill->apply(field,manager,x,y);
     abilities.pop();
+    sym_abilities.pop_back();
 }
+
+void AbilityManager::save(std::ostream& out) const {
+    int abilityCount = static_cast<int>(sym_abilities.size());
+    out.write(reinterpret_cast<const char*>(&abilityCount), sizeof(abilityCount)); // Сохраняем количество способностей
+
+    for (char type : sym_abilities) {
+        out.write(&type, sizeof(type)); // Сохраняем тип каждой способности
+    }
+}
+
+void AbilityManager::load(std::istream& in) {
+    int abilityCount;
+    in.read(reinterpret_cast<char*>(&abilityCount), sizeof(abilityCount));
+    if (!in) {
+        throw std::runtime_error("Error loading ability count.");
+    }
+
+    // Очищаем способности
+    sym_abilities.clear();
+    while (!abilities.empty()) {
+        abilities.pop();
+    }
+
+    for (int i = 0; i < abilityCount; ++i) {
+        char type;
+        in.read(&type, sizeof(type));
+        if (!in) {
+            throw std::runtime_error("Error reading ability type.");
+        }
+
+        sym_abilities.push_back(type);
+        if (type == 'D') {
+            abilities.push(std::make_unique<DoubleDamage>());
+        } else if (type == 'S') {
+            abilities.push(std::make_unique<Scanner>());
+        } else {
+            abilities.push(createRandomAbility());
+        }
+    }
+}
+std::vector<char> AbilityManager::get_abilities_as_symbols(){
+    return sym_abilities;
+}
+
+
+
+
+

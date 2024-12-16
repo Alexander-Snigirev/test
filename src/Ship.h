@@ -3,7 +3,8 @@
 #define DAMAGE 1
 #define D_DAMAGE 2
 #include <vector>
-
+#include <iosfwd> // Для std::ostream и std::istream
+#include <iostream>
 enum class Orientation
 {
     Horizontal,
@@ -37,6 +38,8 @@ public:
     bool is_destroyed() const;
     Ship(const Ship&);
     Ship& operator=(const Ship&);
+    void set_segment_status(size_t index, DamageLevel status);
+    void set_orientation(Orientation orient);
 
 private:
     const int MIN_LENGTH = 1;

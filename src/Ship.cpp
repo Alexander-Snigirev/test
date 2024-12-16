@@ -11,6 +11,11 @@ Ship::Ship(int length, Orientation orientation): length(length), orientation(ori
     segment_arr.resize(length, DamageLevel::Intact);
 }
 
+void Ship::set_orientation(Orientation orient){
+    orientation = orient;
+}
+
+
 Ship::~Ship()
 {
     // No dynamic memory allocation; nothing to clean up
@@ -94,3 +99,12 @@ bool Ship::is_destroyed() const
     }
     return true;
 }
+
+void Ship::set_segment_status(size_t index, DamageLevel status) {
+        if (index < segment_arr.size()) {
+            segment_arr[index] = status;
+        } else {
+            throw std::out_of_range("Segment index out of range");
+        }
+}
+

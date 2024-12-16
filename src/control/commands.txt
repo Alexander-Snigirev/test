@@ -1,0 +1,6 @@
+a Attack
+b Ability
+c Saving
+d Saving
+e endTurn
+e endTurn

@@ -32,5 +32,9 @@ class UsingAbilityException: public GameException {
     public:
         UsingAbilityException() : GameException("You don't have got accessible abilities now."){}
 };
+class CommandException: public GameException{
+    public:
+        CommandException(): GameException("You have already done this action in current turn"){}
+};
 
 #endif

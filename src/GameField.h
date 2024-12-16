@@ -6,6 +6,7 @@
 #include "Ship.h"
 #include "ShipManager.h"
 
+
 enum class CellStatus
 {
     Unknown,
@@ -39,6 +40,9 @@ public:
     Ship* get_ship_at(int x, int y) const;
     int get_segment_index(int x, int y) const;
     bool is_correct_position(int x, int y) const;
+    void save(std::ostream& out, const ShipManager& shipManager) const;
+    void load(std::istream& in, const ShipManager& shipManager);
+
 
 
 private:

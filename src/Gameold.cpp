@@ -1,9 +1,13 @@
-#include "Game.h"
-
+/*#include "Game.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <cstdlib>
+#include <ctime>
 
 Game::Game()
     : playerField(10, 10), enemyField(10, 10), playerShips(),
-      enemyShips({1}), playerAbilities(), isPlayerTurn(true), roundNumber(1), acounter(0), ucounter(0), endflag(0) {}
+      enemyShips({1}), playerAbilities(), isPlayerTurn(true), roundNumber(1) {}
 
 void Game::start_new_game() {
     char ans;
@@ -49,7 +53,7 @@ void imaging_field(GameField& field){
 
 void Game::initialize_round() {
     enemyField = GameField(10,10);
-    enemyShips = ShipManager({1,1,2,2});
+    enemyShips = ShipManager({1,1});
 
     // Случайное размещение кораблей врага
     srand(time(0));
@@ -76,28 +80,25 @@ void Game::initialize_round() {
 void Game::start_round() {
     std::cout << "Round " << roundNumber << " started!" << std::endl;
     bool defeat = false;
-    InputHandler inputHandler("control/commands.txt");
+    InputHandler inputHandler("commands.txt");
     FieldRenderer fieldRenderer;
 
     // Создаем контроллер и рендерер
     GameController<Game, InputHandler> controller(*this, inputHandler);
-    GameRenderer renderer(fieldRenderer);
+    GameRenderer<Game, FieldRenderer> renderer(fieldRenderer);
 
     while (true) {
-        
+        std::cout << "Your Field:" << '\n';
+        imaging_field(playerField);
+        std::cout << "Enemy Field:" << '\n';
+        imaging_field(enemyField);
+        std::cout<<"Your abilities: "<<playerAbilities.get_count()<<std::endl;
+
         if (isPlayerTurn){
-            endflag=0;
-            acounter=0;
-            ucounter=0;
             std::cout << "Your turn!" << std::endl;
-            //std::cout<<enemyShips.get_ships_count()<<std::endl;
-            //std::cout<<enemyShips.get_vector_size()<<std::endl;
-            //UseCommand();
-            while(1){
-                renderer.render(playerField, enemyField, playerAbilities);
-                controller.processInput();
-                if(endflag) break;
-            }
+            UseCommand();
+            UseAbility();
+            execute_player_turn();
         } else {
             execute_enemy_turn();
         }
@@ -157,33 +158,46 @@ void Game::UseCommand(){
     }
 }
 
-void Game::setEndFlag(){
-    endflag = 1;
-}
-
 void Game::UseAbility(){
-    if(ucounter){
-        throw CommandException();
-    }
-    int ships_num_before = enemyShips.get_ships_count();
-    playerAbilities.UseSkill(playerShips, enemyField);
-    ucounter=1;
-
-    int ships_num_after = enemyShips.get_ships_count();
-    if (ships_num_after < ships_num_before) {
-        playerAbilities.AddSkill();
-    }
+    if(playerAbilities.get_count())
+    {
+        std::cout<<"Do you want to use ability(Y/N)?\n";
+        char answer;
+        std::cin>>answer;
+        if(answer=='Y')
+        {
+            int ships_num_before = enemyShips.get_ships_count();
+            try {
+                playerAbilities.UseSkill(playerShips, enemyField);
+            } catch (const UsingAbilityException&) {
+                std::cout << "No abilities available. Proceeding to attack." << std::endl;
+            } catch(const InvalidCoordinatesException& e){
+                std::cout<<e.what()<<std::endl;
+                UseAbility();
+            }
+            int ships_num_after = enemyShips.get_ships_count();
+            if (ships_num_after < ships_num_before) {
+                playerAbilities.AddSkill();
+            }
+        }
+    } 
 }
 
-void Game::execute_player_turn(int x, int y) {
+void Game::execute_player_turn() {
        
     int ships_num_before = enemyShips.get_ships_count();
-    if(acounter){
-        throw CommandException();
+    int x, y;
+    std::cout << "Enter coordinates for attack (x y): ";
+    std::cin >> x >> y;
+    try{
+        enemyField.attack(x, y, enemyShips, DAMAGE);
     }
-    enemyField.attack(x, y, enemyShips, DAMAGE);
-    acounter=1;
+    catch (const InvalidCoordinatesException& e){
+        std::cout<<e.what()<<std::endl;
+        execute_player_turn();
+    }
     int ships_num_after = enemyShips.get_ships_count();
+    std::cout<<ships_num_after<<std::endl;
     if (ships_num_after < ships_num_before) {
         playerAbilities.AddSkill();
     }
@@ -246,7 +260,7 @@ void Game::load_game(const std::string& filename) {
     std::cout << "Game successfully loaded from " << filename << std::endl;
 }
 
-
+*/
 
 
 

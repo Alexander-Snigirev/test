@@ -19,6 +19,12 @@ public:
     bool check_all_ships() const;
     ShipManager(const ShipManager& other);
     ShipManager& operator=(const ShipManager& other);
+    int get_ship_index(const Ship* ship) const;
+    void set_orientation(size_t idx, Orientation orient);
+    void save(std::ostream& out) const;
+    void load(std::istream& in);
+    int get_vector_size();
+
 
 
 private:

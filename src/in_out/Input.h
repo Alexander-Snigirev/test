@@ -9,9 +9,7 @@
 class Input {
 public:
     static void place_ships(GameField& field, ShipManager& shipManager);
-    static std::pair<int, int> get_attack_coordinates();
-    static std::vector<int> get_ship_lengths();
-    static void use_ability(AbilityManager& abilityManager, GameField& field, ShipManager& shipManager);
+    static std::vector<int> get_ship_lengths();    
 };
 
 #endif

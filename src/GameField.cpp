@@ -205,3 +205,58 @@ GameField& GameField::operator=(GameField&& other)
     }
     return *this;
 }
+
+void GameField::save(std::ostream& out, const ShipManager& shipManager) const {
+    out.write(reinterpret_cast<const char*>(&width), sizeof(width));
+    out.write(reinterpret_cast<const char*>(&height), sizeof(height));
+
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            const Cell& cell = field[y][x];
+            int cellStatus = static_cast<int>(cell.cell);
+
+            int shipId = -1; // -1 если корабля нет
+            if (cell.ship) {
+                shipId = shipManager.get_ship_index(cell.ship);
+            }
+
+            out.write(reinterpret_cast<const char*>(&cellStatus), sizeof(cellStatus));
+            out.write(reinterpret_cast<const char*>(&shipId), sizeof(shipId));
+            out.write(reinterpret_cast<const char*>(&cell.segment_index_grid), sizeof(cell.segment_index_grid));
+        }
+    }
+}
+
+void GameField::load(std::istream& in, const ShipManager& shipManager) {
+    in.read(reinterpret_cast<char*>(&width), sizeof(width));
+    in.read(reinterpret_cast<char*>(&height), sizeof(height));
+    if (!in) {
+        throw std::runtime_error("Error loading game field dimensions.");
+    }
+
+    field.resize(height, std::vector<Cell>(width));
+
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            auto& cell = field[y][x];
+            int cellStatus, shipId, segmentIndex;
+            in.read(reinterpret_cast<char*>(&cellStatus), sizeof(cellStatus));
+            in.read(reinterpret_cast<char*>(&shipId), sizeof(shipId));
+            in.read(reinterpret_cast<char*>(&segmentIndex), sizeof(segmentIndex));
+
+            cell.cell = static_cast<CellStatus>(cellStatus);
+            cell.segment_index_grid = segmentIndex;
+
+            if (shipId != -1) {
+                cell.ship = shipManager.get_ship(shipId).get(); // Восстанавливаем указатель на корабль
+            } else {
+                cell.ship = nullptr;
+            }
+        }
+    }
+}
+
+
+
+
+

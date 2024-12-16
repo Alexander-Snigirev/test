@@ -15,7 +15,19 @@ SRC = main.cpp \
 	  skills/Bombardment.cpp\
 	  skills/AbilityManager.cpp\
 	  Game.cpp\
-	  in_out/Input.cpp
+	  in_out/Input.cpp\
+	  GameState.cpp\
+	  control/InputHandler.cpp\
+	  control/GameRenderer.cpp\
+	  control/GameController.cpp\
+	  control/FieldRenderer.cpp\
+	  control/AttackCommand.cpp\
+	  control/AbilityCommand.cpp\
+	  control/EndCommand.cpp\
+	  control/SaveCommand.cpp\
+	  control/LoadCommand.cpp\
+
+
 
 # Список объектных файлов (меняем расширение .cpp на .o)
 OBJ = $(SRC:.cpp=.o)
