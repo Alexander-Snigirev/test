@@ -10,8 +10,8 @@ private:
 
 public:
     GameRenderer(const FieldRenderer& renderer);
-
     void render(GameField& playerField, GameField& enemyField, AbilityManager& abilities);
+    void print_msg(const char* msg);
 };
 
 #endif

@@ -19,11 +19,11 @@ private:
     bool isCorrectCommands(std::vector<int> hashes);
 public:
     InputHandler(const std::string& filename);
-
     void loadCommandsFromFile(const std::string& filename);
-
     void setDefaultCommands();
-
     std::unique_ptr<Command> getCommand();
+    void enter_ships_coords(GameField& field, ShipManager& shipManager);
+    std::vector<int> enter_ship_lengths();  
+    std::unique_ptr<Command> loading();
 };
 #endif

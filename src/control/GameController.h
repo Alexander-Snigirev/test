@@ -14,8 +14,8 @@ private:
 
 public:
     GameController(GameType& gameInstance, const InputHandler& handler);
-
     void processInput();
+    bool start_loading();
 };
 
 #endif

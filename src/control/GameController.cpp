@@ -27,6 +27,26 @@ void GameController<GameType, InputHandler>::processInput() {
 }
 
 template <typename GameType, typename InputHandler>
+bool GameController<GameType, InputHandler>::start_loading(){
+    while(1){
+        auto action = inputHandler.loading();
+        if(action!=nullptr){
+            try{
+                action->execute(game);
+                return true;
+            }
+            catch(std::runtime_error& e){
+                std::cout<<e.what()<<std::endl;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+}
+
+
+template <typename GameType, typename InputHandler>
 GameController<GameType, InputHandler>::GameController(GameType& gameInstance, const InputHandler& handler): game(gameInstance), inputHandler(handler) {}
 
 template class GameController<Game, InputHandler>;

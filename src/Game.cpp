@@ -6,50 +6,40 @@ Game::Game()
       enemyShips({1}), playerAbilities(), isPlayerTurn(true), roundNumber(1), acounter(0), ucounter(0), endflag(0) {}
 
 void Game::start_new_game() {
-    char ans;
+    InputHandler startInput("commands.txt");
+    GameController<Game, InputHandler> startController(*this, startInput);
+    bool ld = startController.start_loading();
+    if(ld){ 
+        start_round();
+        return;
+    }
+    /*char ans;
     std::cout<<"Do you want to load save?(y/n)"<<std::endl;
     std::cin>>ans;
     if(ans=='y'){
         loading();
         start_round();
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return;
-    }
+    }*/
     playerField = GameField(10, 10);
     
-    // Пользователь вводит длины кораблей
-    auto shipLengths = Input::get_ship_lengths();
+    auto shipLengths = startInput.enter_ship_lengths();
     playerShips = ShipManager(shipLengths);
-    Input::place_ships(playerField, playerShips);
+    startInput.enter_ships_coords(playerField, playerShips);
 
-    // Создание кораблей компьютера
 
     playerAbilities = AbilityManager();
     isPlayerTurn = true;
     roundNumber = 1;
 
-    std::cout << "New game started!" << std::endl;
     initialize_round();
     start_round();
 }
 
-void imaging_field(GameField& field){
-    std::cout<<"  0 1 2 3 4 5 6 7 8 9\n";
-    for (int y = 0; y < 10; ++y)
-    {
-        std::cout<<y<<' ';
-        for (int x = 0; x < 10; ++x)
-        {
-            std::cout << field.get_field_point(x, y) << ' ';
-        }
-        std::cout << '\n';
-    }
-
-}
 
 void Game::initialize_round() {
     enemyField = GameField(10,10);
-    enemyShips = ShipManager({1,1,2,2});
+    enemyShips = ShipManager({1,1});
 
     // Случайное размещение кораблей врага
     srand(time(0));
@@ -68,13 +58,11 @@ void Game::initialize_round() {
         }
         enemyShips.set_orientation(i, orientation);
     }
-    std::cout << "All ships placed. Starting the round!" << std::endl;
 }
 
 
 
 void Game::start_round() {
-    std::cout << "Round " << roundNumber << " started!" << std::endl;
     bool defeat = false;
     InputHandler inputHandler("control/commands.txt");
     FieldRenderer fieldRenderer;
@@ -84,15 +72,10 @@ void Game::start_round() {
     GameRenderer renderer(fieldRenderer);
 
     while (true) {
-        
         if (isPlayerTurn){
             endflag=0;
             acounter=0;
             ucounter=0;
-            std::cout << "Your turn!" << std::endl;
-            //std::cout<<enemyShips.get_ships_count()<<std::endl;
-            //std::cout<<enemyShips.get_vector_size()<<std::endl;
-            //UseCommand();
             while(1){
                 renderer.render(playerField, enemyField, playerAbilities);
                 controller.processInput();
@@ -103,13 +86,11 @@ void Game::start_round() {
         }
 
         if (check_victory()) {
-            std::cout << "You win the round!" << std::endl;
             ++roundNumber;
             break;
         }
 
         if (check_defeat()) {
-            std::cout << "You lose! Starting new game..." << std::endl;
             defeat = true;
             break;
         }
@@ -124,38 +105,18 @@ void Game::start_round() {
     start_round(); // Переход к следующему раунду
 }
 
-void Game::loading(){
+/*void Game::loading(){
     std::string file_name;
     std::cout<<"Enter the filename\n";
     std::cin>>file_name;
     try{
         load_game(file_name);
-
-        std::cout << "Your Field:" << '\n';
-        imaging_field(playerField);
-        std::cout << "Enemy Field:" << '\n';
-        imaging_field(enemyField);
-        std::cout<<"Your abilities: "<<playerAbilities.get_count()<<std::endl;
-
     } catch(std::runtime_error& e){
         std::cout<<e.what()<<std::endl;
         loading();
     }
-}
+}*/
 
-void Game::UseCommand(){
-    std::cout<<"Enter command"<<std::endl;
-    std::string command, file_name;
-    std::cin>>command;
-    if(command=="save"){
-        std::cout<<"Enter the filename\n";
-        std::cin>>file_name;
-        save_game(file_name);
-    }
-    else if(command=="load"){
-        loading();
-    }
-}
 
 void Game::setEndFlag(){
     endflag = 1;
@@ -190,8 +151,6 @@ void Game::execute_player_turn(int x, int y) {
 }
 
 void Game::execute_enemy_turn() {
-    std::cout << "Enemy's turn!" << std::endl;
-
     int x, y;
     srand(time(0));
     do {
@@ -228,7 +187,6 @@ void Game::save_game(const std::string& filename){
     gameState.save(outFile, playerShips, enemyShips);
 
     outFile.close();
-    std::cout << "Game successfully saved to " << filename << std::endl;
 }
 
 
@@ -243,7 +201,6 @@ void Game::load_game(const std::string& filename) {
     gameState.load(roundNumber, playerField, enemyField, playerShips, enemyShips, playerAbilities, inFile);
 
     inFile.close();
-    std::cout << "Game successfully loaded from " << filename << std::endl;
 }
 
 

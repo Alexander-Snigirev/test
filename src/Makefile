@@ -15,7 +15,6 @@ SRC = main.cpp \
 	  skills/Bombardment.cpp\
 	  skills/AbilityManager.cpp\
 	  Game.cpp\
-	  in_out/Input.cpp\
 	  GameState.cpp\
 	  control/InputHandler.cpp\
 	  control/GameRenderer.cpp\

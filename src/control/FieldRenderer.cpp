@@ -4,9 +4,19 @@ void FieldRenderer::draw(const GameField& field, bool hideShips) const {
         for (int y = 0; y < 10; ++y)
         {
             std::cout<<y<<' ';
-            for (int x = 0; x < 10; ++x)
-            {
-                std::cout << field.get_field_point(x, y) << ' ';
+            if(hideShips){
+                for (int x = 0; x < 10; ++x)
+                {
+                    if(field.get_field_point(x,y)=='S' || field.get_field_point(x,y)=='.')
+                        std::cout<< '~'<<' ';
+                    else std::cout << field.get_field_point(x, y) << ' ';
+                }
+            }
+            else{
+                for (int x = 0; x < 10; ++x)
+                { 
+                    std::cout << field.get_field_point(x, y) << ' ';
+                }
             }
             std::cout << '\n';
         }
