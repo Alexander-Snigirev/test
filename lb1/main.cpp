@@ -2,12 +2,26 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
-
+#define DEBUG_MODE 0
 using namespace std;
 
+unsigned long int A;
 
-
-
+void print_solution_matrix(int N, const vector<tuple<int, int, int>>& solution) {
+    vector<vector<int>> matrix(N, vector<int>(N, 0));
+    int index = 1;
+    for (const auto& [x, y, size] : solution) {
+        for (int i = x; i < x + size; i++)
+            for (int j = y; j < y + size; j++)
+                matrix[i][j] = index;
+        index++;
+    }
+    cout << "Лучшая матрица разбиения:\n";
+    for (const auto& row : matrix) {
+        for (int cell : row) cout << (cell > 0 ? to_string(cell) : ".") << " ";
+        cout << endl;
+    }
+}
 bool is_valid(vector<vector<int>>& grid, int x, int y, int size, int N) {
     if (x + size > N || y + size > N) return false;
     //for (int i = x; i < x + size; i++)
@@ -53,6 +67,8 @@ void backtrack(vector<vector<int>>& grid, vector<tuple<int, int, int>>& squares,
     if (min_x == -1) {
         if (best_solution.empty() || squares.size() < best_solution.size()) {
             best_solution = squares;
+            if(DEBUG_MODE)
+            print_solution_matrix(N, best_solution);
         }
         return;
     }
@@ -66,6 +82,7 @@ void backtrack(vector<vector<int>>& grid, vector<tuple<int, int, int>>& squares,
             place_square(grid, min_x, min_y, size, squares.size() + 1);
             squares.emplace_back(min_x, min_y, size);
             remaining_area-=(size*size);
+            A++;
             backtrack(grid, squares, N, best_solution, remaining_area);
             squares.pop_back();
             remove_square(grid, min_x, min_y, size);
@@ -109,6 +126,7 @@ vector<tuple<int, int, int>> squaring_the_square(int N) {
     vector<tuple<int,int,int>> squares;
     int maxW = (N+1)/2;
     int bigW = N-maxW;
+    
     place_square(grid, 0, 0, maxW, maxW);
     tuple<int,int,int> biggest_sqr = {0,0, maxW};
     squares.emplace_back(biggest_sqr);
@@ -128,21 +146,7 @@ vector<tuple<int, int, int>> squaring_the_square(int N) {
 
 
 
-void print_solution_matrix(int N, const vector<tuple<int, int, int>>& solution) {
-    vector<vector<int>> matrix(N, vector<int>(N, 0));
-    int index = 1;
-    for (const auto& [x, y, size] : solution) {
-        for (int i = x; i < x + size; i++)
-            for (int j = y; j < y + size; j++)
-                matrix[i][j] = index;
-        index++;
-    }
-    cout << "Итоговая матрица разбиения:\n";
-    for (const auto& row : matrix) {
-        for (int cell : row) cout << (cell > 0 ? to_string(cell) : ".") << " ";
-        cout << endl;
-    }
-}
+
 
 
 
