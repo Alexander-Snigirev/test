@@ -2,7 +2,7 @@
 #include <vector>
 #include <tuple>
 #include <algorithm>
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 using namespace std;
 
 unsigned long int A;
@@ -31,14 +31,16 @@ bool is_valid(vector<vector<int>>& grid, int x, int y, int size, int N) {
 }
 
 void place_square(vector<vector<int>>& grid, int x, int y, int size, int label) {
-    cout<<"На позицию ("<<x<<", "<<y<<") размещается квадрат со стороной "<<size<<endl;
+    if(DEBUG_MODE)
+        cout<<"На позицию ("<<x<<", "<<y<<") размещается квадрат со стороной "<<size<<endl;
     for (int i = x; i < x + size; i++)
         for (int j = y; j < y + size; j++)
             grid[i][j] = label;
 }
 
 void remove_square(vector<vector<int>>& grid, int x, int y, int size) {
-    cout<<"C позиции ("<<x<<", "<<y<<") удаляется квадрат со стороной "<<size<<endl;
+    if(DEBUG_MODE)
+        cout<<"C позиции ("<<x<<", "<<y<<") удаляется квадрат со стороной "<<size<<endl;
     for (int i = x; i < x + size; i++)
         for (int j = y; j < y + size; j++)
             grid[i][j] = 0;
