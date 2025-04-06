@@ -1,0 +1,53 @@
+Main process PID=28239, Main TID=28239
+Creating pthreads...
+pthread TID=28241, thread 2 started
+pthread TID=28241, thread 2: iteration 0
+pthread TID=28240, thread 1 started
+pthread TID=28240, thread 1: iteration 0
+pthread TID=28242, thread 3 started
+pthread TID=28242, thread 3: iteration 0
+pthread TID=28241, thread 2: iteration 1
+pthread TID=28240, thread 1: iteration 1
+pthread TID=28242, thread 3: iteration 1
+pthread TID=28242, thread 3: iteration 2
+pthread TID=28241, thread 2: iteration 2
+pthread TID=28240, thread 1: iteration 2
+pthread TID=28242, thread 3: iteration 3
+pthread TID=28241, thread 2: iteration 3
+pthread TID=28240, thread 1: iteration 3
+pthread TID=28241, thread 2: iteration 4
+pthread TID=28242, thread 3: iteration 4
+pthread TID=28240, thread 1: iteration 4
+Signal 15 (SIGTERM) received by TID=28241
+pthread TID=28242, thread 3 completed
+pthread TID=28240, thread 1 completed
+All pthreads completed.
+
+Creating clone threads...
+clone TID=28317, thread 1 started
+clone TID=28317, thread 1: iteration 0
+clone TID=28318, thread 2 started
+clone TID=28318, thread 2: iteration 0
+clone TID=28318, thread 2: iteration 0
+clone TID=28319, thread 3 started
+clone TID=28319, thread 3: iteration 0
+clone TID=28319, thread 3: iteration 1
+clone TID=28318, thread 2: iteration 1
+clone TID=28317, thread 1: iteration 1
+clone TID=28319, thread 3: iteration 2
+clone TID=28319, thread 3: iteration 2
+clone TID=28318, thread 2: iteration 2
+clone TID=28319, thread 3: iteration 2
+clone TID=28318, thread 2: iteration 2
+clone TID=28317, thread 1: iteration 2
+clone TID=28317, thread 1: iteration 3
+clone TID=28318, thread 2: iteration 3
+clone TID=28319, thread 3: iteration 3
+clone TID=28317, thread 1: iteration 4
+clone TID=28319, thread 3: iteration 4
+clone TID=28318, thread 2: iteration 4
+clone TID=28319, thread 3 completed
+clone TID=28317, thread 1 completed
+clone TID=28318, thread 2 completed
+All clone threads completed.
+Main process exiting normally.

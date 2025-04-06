@@ -1,0 +1,6 @@
+pthread TID=19659, thread 3 wrote this
+pthread TID=19657, thread 1 wrote this
+pthread TID=19658, thread 2 wrote this
+clone TID=19660, thread 1 wrote this
+clone TID=19662, thread 3 wrote this
+clone TID=19661, thread 2 wrote this

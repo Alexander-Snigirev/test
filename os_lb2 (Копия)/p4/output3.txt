@@ -1,0 +1,25 @@
+Main process PID=19656
+Creating pthreads...
+pthread TID=19657, thread 1: incremented shared_counter to 1
+pthread TID=19658, thread 2: incremented shared_counter to 2
+pthread TID=19659, thread 3: incremented shared_counter to 3
+pthread TID=19657, thread 1: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+pthread TID=19659, thread 3: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+pthread TID=19658, thread 2: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+All pthreads completed.
+
+Creating clone threads...
+clone TID=19660, thread 1: incremented shared_counter to 4
+clone TID=19660, thread 1: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+clone T10 received by TID=19656
+clone TID=19661, thread 2: incremented shared_counter to 6
+clone TID=19661, thread 2: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+All clone threads completed.
+
+Contents of thread_output.txt:
+pthread TID=19659, thread 3 wrote this
+pthread TID=19657, thread 1 wrote this
+pthread TID=19658, thread 2 wrote this
+clone TID=19660, thread 1 wrote this
+clone TID=19662, thread 3 wrote this
+clone TID=19661, thread 2 wrote this

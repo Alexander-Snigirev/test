@@ -1,0 +1,2 @@
+Minimal nice = 1
+Maximal nice = 99
