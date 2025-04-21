@@ -12,6 +12,8 @@
 #include <string>
 #include <quadmath.h>
 
+
+
 namespace doubledouble {
 
 class DoubleDouble
@@ -104,21 +106,12 @@ public:
 
 };
 
-inline const DoubleDouble dd_sqrt2{1.4142135623730951, -9.667293313452913e-17};
-inline const DoubleDouble dd_sqrt1_2{0.7071067811865476, -4.833646656726457e-17};
-inline const DoubleDouble dd_e{2.7182818284590452, 1.44564689172925013472e-16};
-inline const DoubleDouble dd_ln2{0.6931471805599453, 2.3190468138462996e-17};
-inline const DoubleDouble dd_pi{3.1415926535897932, 1.22464679914735317636e-16};
-inline const DoubleDouble dd_pi_2{1.5707963267948966, 6.123233995736766e-17};
-inline const DoubleDouble dd_1_pi{0.3183098861837907, -1.9678676675182486e-17};
-inline const DoubleDouble dd_1_sqrtpi{0.5641895835477563,7.66772980658294e-18};
-inline const DoubleDouble dd_2_sqrtpi{1.1283791670955126, 1.533545961316588e-17};
-inline const DoubleDouble dd_sqrt_pi_2{1.2533141373155003, -9.164289990229583e-17};
-inline const DoubleDouble dd_sqrt_2_pi{0.7978845608028654, -4.98465440455546e-17};
 inline DoubleDouble two_sum_quick(double x, double y)
 {
     double r = x + y;
     double e = y - (r - x);
+    //printf("upper = %.20f\nlower = %.34f\n",r,e);
+
     return DoubleDouble(r, e);
 }
 
@@ -128,6 +121,7 @@ inline DoubleDouble two_sum(double x, double y)
     double r = x + y;
     double t = r - x;
     double e = (x - (r - t)) + (y - t);
+    //printf("upper = %.20f\nlower = %.34f\n",r,e);
     return DoubleDouble(r, e);
 }
 
@@ -168,10 +162,25 @@ inline DoubleDouble operator+(double x, const DoubleDouble& y)
 
 inline DoubleDouble DoubleDouble::operator+(const DoubleDouble& x) const
 {
+    DoubleDouble re;
+    if(fabs(upper)<fabs(x.upper)){
+    re = two_sum(upper, x.upper);
+    re.lower = (re.lower + lower) + x.lower;
+    }
+    else{
+    re = two_sum(x.upper, upper);
+    re.lower = (re.lower + x.lower) + lower;
+    }
+    //return re;
+    
+    return two_sum(re.upper, re.lower);
+}
+/*inline DoubleDouble DoubleDouble::operator+(const DoubleDouble& x) const
+{
     DoubleDouble re = two_sum(upper, x.upper);
     re.lower += lower + x.lower;
     return two_sum_quick(re.upper, re.lower);
-}
+}*/
 
 inline DoubleDouble DoubleDouble::operator-(double x) const
 {
@@ -187,15 +196,18 @@ inline DoubleDouble operator-(double x, const DoubleDouble& y)
 
 inline DoubleDouble DoubleDouble::operator-(const DoubleDouble& x) const
 {
-    DoubleDouble re = two_difference(upper, x.upper);
+    /*DoubleDouble re = two_difference(upper, x.upper);
     re.lower += lower - x.lower;
-    return two_sum_quick(re.upper, re.lower);
+    return two_sum_quick(re.upper, re.lower);*/
+    DoubleDouble re = *this + (-x);
+    return re;
 }
 
 inline DoubleDouble DoubleDouble::operator*(double x) const
 {
     DoubleDouble re = two_product(upper, x);
     re.lower += lower * x;
+    return re;
     return two_sum_quick(re.upper, re.lower);
 }
 
@@ -206,9 +218,9 @@ inline DoubleDouble operator*(double x, const DoubleDouble& y)
 
 inline DoubleDouble DoubleDouble::operator*(const DoubleDouble& x) const
 {
-    DoubleDouble re = two_product(upper, x.upper);
-    re.lower += upper*x.lower + lower*x.upper;
-    //return two_sum_quick(re.upper, re.lower);
+    DoubleDouble re = two_product(upper, x.upper); 
+    re.lower = re.lower + (upper*x.lower + lower*x.upper);
+    return two_sum(re.upper, re.lower);
     return re;
 }
 
@@ -217,7 +229,9 @@ inline DoubleDouble DoubleDouble::operator/(double x) const
     double r = upper/x;
     DoubleDouble sf = two_product(r, x);
     double e = (upper - sf.upper - sf.lower + lower)/x;
-    return two_sum_quick(r, e);
+    DoubleDouble res(r,e);
+    //return res;
+    return two_sum(r, e);
 }
 
 inline DoubleDouble operator/(double x, const DoubleDouble& y)
@@ -230,7 +244,7 @@ inline DoubleDouble DoubleDouble::operator/(const DoubleDouble& x) const
     double r = upper/x.upper;
     DoubleDouble sf = two_product(r, x.upper);
     double e = (upper - sf.upper - sf.lower + lower - r*x.lower)/x.upper;
-    return two_sum_quick(r, e);
+    return two_sum(r, e);
 }
 
 inline DoubleDouble& DoubleDouble::operator+=(double x)
@@ -404,9 +418,9 @@ inline DoubleDouble DoubleDouble::custom_sqrt() const {
         x = DoubleDouble(upper * 2.0, 0.0);
     }
 
-    const DoubleDouble tolerance(1e-20, 1e-30); 
+    const DoubleDouble tolerance(1e-20, 1e-34); 
     DoubleDouble two(2.0, 0.0);
-    int max_iterations = 100; 
+    int max_iterations = 200; 
 
     for (int i = 0; i < max_iterations; ++i) {
         DoubleDouble x2 = x * x;
@@ -415,7 +429,7 @@ inline DoubleDouble DoubleDouble::custom_sqrt() const {
         DoubleDouble delta = fx / dfx;
         x = x - delta;
         if(delta.upper < 0.0) delta = -delta; 
-        printf("upper = %.20f\nlower = %.34f\n", x.upper, x.lower);
+        printf("%d: upper = %.20f\n%d: lower = %.34f\n",i, x.upper,i, x.lower);
 
         if(delta.upper < tolerance.upper && std::abs(delta.lower) < tolerance.lower) {
             break;
@@ -443,15 +457,30 @@ inline DoubleDouble DoubleDouble::sqrt() const
 void
 print_doubledouble(const char *prefix, const doubledouble::DoubleDouble& x)
 {
-    printf("%s = (%.20f, %.34f)\n", prefix, x.upper, x.lower);
+    printf("%s = (%.34f, %.34f)\n", prefix, x.upper, x.lower);
 }
 
 int main()
 {
-    int nu;
-    std::cin>>nu;
-    doubledouble::DoubleDouble num(nu);
-    print_doubledouble("x", num);
-    doubledouble::DoubleDouble num2 = num.custom_sqrt();
-    print_doubledouble("cus_sqrt", num2);
+    //x = 2.123453647583675
+    //y = 0.000000000000123467654
+    //r = 2.123453647583798
+    //2.123453647583675
+    //t = 0.000000000000123
+    //0.467654
+
+    doubledouble::DoubleDouble num1(0.5);
+    //doubledouble::DoubleDouble num2(-312.0865, -2e-16);
+    //doubledouble::DoubleDouble num3 = num1 * num2;
+    //print_doubledouble("x", num1);
+    //print_doubledouble("y", num2);
+
+    doubledouble::DoubleDouble num2 = num1.custom_sqrt();
+    print_doubledouble("sqrt", num2);
+    // 27.73084924772409456+0.00000000000000024661310508970917
+    //111.108055513540506353820092+0.0000000000000048911843466983030844
+    //993.2668322258626858456409536302089691-0.0000000000000266418017282923335001
+    //111.1080555135405063538200920447707176+0.0000000000000048911843466983030844
+    //27.7308492477240946527672349475324154+0.0000000000000002466131050897091743
+    
 }
