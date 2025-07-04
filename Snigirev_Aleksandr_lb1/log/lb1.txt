@@ -1,0 +1,1154 @@
+[Вт 18 фев 2025 20:19:43 MSK]alexander@alexander-AORUS-15P-XD:~$ date
+[Вт 18 фев 2025 20:19:49 MSK]alexander@alexander-AORUS-15P-XD:~$ lscpu
+Архитектура:              x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          39 bits physical, 48 bits virtual
+  Порядок байт:           Little Endian
+CPU(s):                   16
+  On-line CPU(s) list:    0-15
+ID прроизводителя:        GenuineIntel
+  Имя модели:             11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+    Семейство ЦПУ:        6
+    Модель:               141
+    Потоков на ядро:      2
+    Ядер на сокет:        8
+    Сокетов:              1
+    Степпинг:             1
+    CPU(s) scaling MHz:   20%
+    CPU max MHz:          4600,0000
+    CPU min MHz:          800,0000
+    BogoMIPS:             4608,00
+    Флаги:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall
+                           nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_fre
+                          q pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_dead
+                          line_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l2 cdp_l2 ssbd ibrs ibpb stibp ibrs_enhanced
+                           tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdt_a avx512f avx512dq rdseed adx
+                           smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves split_lock_detect us
+                          er_shstk dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req vnmi avx512vbmi umip pku ospke avx512_vbmi2 
+                          gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid movdiri movdir64b fsrm avx512_vp2intersect md_clear ibt f
+                          lush_l1d arch_capabilities
+Virtualization features:  
+  Виртуализация:          VT-x
+Caches (sum of all):      
+  L1d:                    384 KiB (8 instances)
+  L1i:                    256 KiB (8 instances)
+  L2:                     10 MiB (8 instances)
+  L3:                     24 MiB (1 instance)
+NUMA:                     
+  NUMA node(s):           1
+  NUMA node0 CPU(s):      0-15
+Vulnerabilities:          
+  Gather data sampling:   Mitigation; Microcode
+  Itlb multihit:          Not affected
+  L1tf:                   Not affected
+  Mds:                    Not affected
+  Meltdown:               Not affected
+  Mmio stale data:        Not affected
+  Reg file data sampling: Not affected
+  Retbleed:               Not affected
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; RSB filling; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop
+  Srbds:                  Not affected
+  Tsx async abort:        Not affected
+Пункт_1:
+[Вт 18 фев 2025 20:20:41 MSK]alexander@alexander-AORUS-15P-XD:~$ ls -lR / 2>/dev/null | awk '{print $1, $9, $NF}' | grep -E "^-|^b|^c|^d|^l|^p|^s" > all_files.txt
+[Вт 18 фев 2025 20:21:53 MSK]alexander@alexander-AORUS-15P-XD:~$ grep "^-" all_files.txt | head -n 1 > res.txt
+[Вт 18 фев 2025 20:23:55 MSK]alexander@alexander-AORUS-15P-XD:~$ vim res.txt
+[Вт 18 фев 2025 20:25:01 MSK]alexander@alexander-AORUS-15P-XD:~$ grep "^b" all_files.txt | head -n 1 >> res.txt
+[Вт 18 фев 2025 20:25:08 MSK]alexander@alexander-AORUS-15P-XD:~$ grep "^c" all_files.txt | head -n 1 >> res.txt
+[Вт 18 фев 2025 20:25:15 MSK]alexander@alexander-AORUS-15P-XD:~$ grep "^d" all_files.txt | head -n 1 >> res.txt
+[Вт 18 фев 2025 20:25:20 MSK]alexander@alexander-AORUS-15P-XD:~$ grep "^p" all_files.txt | head -n 1 >> res.txt
+[Вт 18 фев 2025 20:25:31 MSK]alexander@alexander-AORUS-15P-XD:~$ grep "^l" all_files.txt | head -n 1 >> res.txt
+[Вт 18 фев 2025 20:25:43 MSK]alexander@alexander-AORUS-15P-XD:~$ grep "^s" all_files.txt | head -n 1 >> res.txt
+[Вт 18 фев 2025 20:26:00 MSK]alexander@alexander-AORUS-15P-XD:~$ vim res.txt
+-rw-r----- debug debug
+brw-rw---- 10:44 loop0
+crw-r--r-- 10:44 autofs
+drwxr-xr-x bin.usr-is-merged bin.usr-is-merged
+prw------- initctl initctl
+lrwxrwxrwx bin usr/bin
+srw-rw-rw- snapd-snap.socket snapd-snap.socket
+~
+~
+"res.txt" 7L, 214B
+[Вт 18 фев 2025 20:26:08 MSK]alexander@alexander-AORUS-15P-XD:~$ vim script.sh
+[Вт 18 фев 2025 20:31:27 MSK]alexander@alexander-AORUS-15P-XD:~$ chmod +x script.sh
+[Вт 18 фев 2025 20:31:34 MSK]alexander@alexander-AORUS-15P-XD:~$ ./script.sh
+Использование: ./script.sh
+[Вт 18 фев 2025 20:31:37 MSK]alexander@alexander-AORUS-15P-XD:~$ ./script.sh output.txt
+Результаты сохранены в output.txt
+[Вт 18 фев 2025 20:32:09 MSK]alexander@alexander-AORUS-15P-XD:~$ vim output.txt
+
+-rw-r----- debug debug
+brw-rw---- 10:58 loop0
+crw-r--r-- 10:58 autofs
+drwxr-xr-x bin.usr-is-merged bin.usr-is-merged
+prw------- initctl initctl
+lrwxrwxrwx bin usr/bin
+srw-rw-rw- snapd-snap.socket snapd-snap.socket
+
+Пункт_2:
+[Вт 18 фев 2025 20:34:26 MSK]alexander@alexander-AORUS-15P-XD:~$ vim script2.sh
+[Вт 18 фев 2025 20:39:02 MSK]alexander@alexander-AORUS-15P-XD:~$ chmod +x script2.sh
+[Вт 18 фев 2025 20:39:09 MSK]alexander@alexander-AORUS-15P-XD:~$ ./script2.sh
+Введите имя файла
+[Вт 18 фев 2025 20:39:16 MSK]alexander@alexander-AORUS-15P-XD:~$ ./script2.sh testo.c
+Ищем ссылки на testo.c
+Жесткие ссылки записаны в hardlinks.txt
+[Вт 18 фев 2025 20:41:17 MSK]alexander@alexander-AORUS-15P-XD:~$ vim hardlinks.txt
+alexander@alexander-AORUS-15P-XD:~$ ./script2.sh 'Рабочий стол'
+Ищем ссылки на Рабочий стол
+Жесткие ссылки записаны в hardlinks.txt
+[Вт 18 фев 2025 20:42:07 MSK]alexander@alexander-AORUS-15P-XD:~$ vim hardlinks.txt
+[Вт 18 фев 2025 20:42:31 MSK]alexander@alexander-AORUS-15P-XD:~$ vim script2.sh
+
+Пункт_3:
+[Чт 20 фев 2025 22:29:54 MSK]alexander@alexander-AORUS-15P-XD:~$ date
+Чт 20 фев 2025 22:29:54 MSK
+[Чт 20 фев 2025 22:30:18 MSK]alexander@alexander-AORUS-15P-XD:~$ ln -s 'Рабочий стол'/Project_Bot/os_lb1 os1.link
+[Чт 20 фев 2025 22:30:24 MSK]alexander@alexander-AORUS-15P-XD:~$ ls
+ bot.link                      goyda.txt            laba_1.o     otput.txt        PycharmProjects   testo.c                  Изображения
+[Чт 20 фев 2025 22:30:54 MSK]alexander@alexander-AORUS-15P-XD:~$ ls os1.link
+a.out  bas.sh  first.log  hardlinks.txt  link.txt  main.c  __pycache__  res.txt  script2.sh  script.sh  scr.sh
+### Простое создание символьной ссылки
+[Чт 20 фев 2025 22:31:43 MSK]alexander@alexander-AORUS-15P-XD:~$ 
+[Чт 20 фев 2025 22:31:43 MSK]alexander@alexander-AORUS-15P-XD:~$ cp -s 'Рабочий стол'/Project_Bot/os_lb1/main.c main_link.c
+[Чт 20 фев 2025 22:31:54 MSK]alexander@alexander-AORUS-15P-XD:~$ ls -l | grep "main"
+-rw-rw-r--  1 alexander alexander      819 ноя 23  2023 main.c
+-rw-rw-r--  1 alexander alexander     1701 ноя 23  2023 main_cw.c
+-rw-rw-r--  1 alexander alexander     1196 ноя  2  2023 main_lb3.c
+-rw-rw-r--  1 alexander alexander     2688 ноя  2  2023 main_lb3.o
+lrwxrwxrwx  1 alexander alexander       49 фев 20 23:03 main_link.c -> Рабочий стол/Project_Bot/os_lb1/main.c
+### Вместо копирования самого файла main.c произошло создание символьной ссылки на него
+[Чт 20 фев 2025 22:32:28 MSK]alexander@alexander-AORUS-15P-XD:~$ link 'Рабочий стол'/Project_Bot/os_lb1/main.c main_link2.c
+[Чт 20 фев 2025 22:32:51 MSK]alexander@alexander-AORUS-15P-XD:~$ ls -l | grep "main"
+-rw-rw-r--  1 alexander alexander      819 ноя 23  2023 main.c
+-rw-rw-r--  1 alexander alexander     1701 ноя 23  2023 main_cw.c
+-rw-rw-r--  1 alexander alexander     1196 ноя  2  2023 main_lb3.c
+-rw-rw-r--  1 alexander alexander     2688 ноя  2  2023 main_lb3.o
+-rw-rw-r--  2 alexander alexander      319 фев 20 22:38 main_link2.c
+lrwxrwxrwx  1 alexander alexander       49 фев 20 23:03 main_link.c -> Рабочий стол/Project_Bot/os_lb1/main.c
+### Командой link можно создать только жесткую ссылку
+[Чт 20 фев 2025 22:33:42 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ vim script3.sh
+[Чт 20 фев 2025 22:39:38 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod +x script3.sh
+[Чт 20 фев 2025 22:40:26 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./script3.sh
+Вы не ввели имя файла
+[Чт 20 фев 2025 22:40:30 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./script3.sh
+Вы не ввели имя файла
+[Чт 20 фев 2025 22:40:37 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./script3.sh main.c
+lrwxrwxrwx  1 alexander alexander        6 фев 20 23:24 main_link3.c -> main.c
+lrwxrwxrwx  1 alexander alexander       49 фев 20 23:03 main_link.c -> Рабочий стол/Project_Bot/os_lb1/main.c
+[Чт 20 фев 2025 22:40:26 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ cd ../../../
+[Чт 20 фев 2025 22:40:28 MSK]alexander@alexander-AORUS-15P-XD:~$ ls
+ 2                             file.sh              laba_1.o       main_link.c      prog.c                   testo.c          Музыка
+ bot.link                      hardlinks.txt        main_cw.c      otput.txt        result.txt               utur.c          'Рабочий стол'
+ Documentation_bot.odt_1.odt   key.ssh              main_link2.c  'Postman Agent'   Snigirev_Aleksandr_lb1   Загрузки
+ file                          laba_1.c             main_link3.c   pr-2023-3388     test_2.txt               Изображения
+### Скрипт вывел символьные ссылки, но не вывел жесткие - отработал корректно
+[Чт 20 фев 2025 22:40:34 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./script3.sh main.c
+Всего ссылок: 
+7
+lrwxrwxrwx  1 alexander alexander        6 фев 20 23:24 main_link3.c -> main.c
+lrwxrwxrwx  1 alexander alexander       49 фев 20 23:03 main_link.c -> Рабочий стол/Project_Bot/os_lb1/main.c
+lrwxrwxrwx 1 alexander alexander     6 фев 25 22:14 link1 -> main.c
+lrwxrwxrwx 1 alexander alexander     6 фев 25 22:15 link2 -> main.c
+lrwxrwxrwx 1 alexander alexander    25 фев 25 22:17 link3 -> Project_Bot/os_lb1/main.c
+lrwxrwxrwx 1 alexander alexander      6 фев 25 22:15 link2 -> main.c
+lrwxrwxrwx 1 alexander alexander        6 фев 25 22:13 link -> main.c
+### В скрипт была добавлена дополнительная команда, подсчитывающая количество ссылок
+
+Пункт_4:
+
+[Пт 21 фев 2025 11:01:27 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ lscpu
+Архитектура:              x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          39 bits physical, 48 bits virtual
+  Порядок байт:           Little Endian
+CPU(s):                   16
+  On-line CPU(s) list:    0-15
+ID прроизводителя:        GenuineIntel
+  Имя модели:             11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+    Семейство ЦПУ:        6
+    Модель:               141
+    Потоков на ядро:      2
+    Ядер на сокет:        8
+    Сокетов:              1
+    Степпинг:             1
+    CPU(s) scaling MHz:   21%
+    CPU max MHz:          4600,0000
+    CPU min MHz:          800,0000
+    BogoMIPS:             4608,00
+    Флаги:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall
+                           nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_fre
+                          q pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_dead
+                          line_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l2 cdp_l2 ssbd ibrs ibpb stibp ibrs_enhanced
+                           tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdt_a avx512f avx512dq rdseed adx
+                           smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves split_lock_detect us
+                          er_shstk dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req vnmi avx512vbmi umip pku ospke avx512_vbmi2 
+                          gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid movdiri movdir64b fsrm avx512_vp2intersect md_clear ibt f
+                          lush_l1d arch_capabilities
+Virtualization features:  
+  Виртуализация:          VT-x
+Caches (sum of all):      
+  L1d:                    384 KiB (8 instances)
+  L1i:                    256 KiB (8 instances)
+  L2:                     10 MiB (8 instances)
+  L3:                     24 MiB (1 instance)
+NUMA:                     
+  NUMA node(s):           1
+  NUMA node0 CPU(s):      0-15
+Vulnerabilities:          
+  Gather data sampling:   Mitigation; Microcode
+  Itlb multihit:          Not affected
+  L1tf:                   Not affected
+  Mds:                    Not affected
+  Meltdown:               Not affected
+  Mmio stale data:        Not affected
+  Reg file data sampling: Not affected
+  Retbleed:               Not affected
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; RSB filling; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop
+  Srbds:                  Not affected
+  Tsx async abort:        Not affected
+
+[Пт 21 фев 2025 11:01:45 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -lRa /home/alexander | grep main.c | grep -E "^l"
+lrwxrwxrwx  1 alexander alexander        6 фев 20 23:24 main_link3.c -> main.c
+lrwxrwxrwx  1 alexander alexander       49 фев 20 23:03 main_link.c -> Рабочий стол/Project_Bot/os_lb1/main.c
+lrwxrwxrwx  1 alexander alexander     6 фев 25 22:14 link1 -> main.c
+lrwxrwxrwx  1 alexander alexander     6 фев 25 22:15 link2 -> main.c
+lrwxrwxrwx  1 alexander alexander    25 фев 25 22:17 link3 -> Project_Bot/os_lb1/main.c
+lrwxrwxrwx  1 alexander alexander      6 фев 25 22:15 link2 -> main.c
+lrwxrwxrwx 1 alexander alexander        6 фев 25 22:13 link -> main.c
+### Получены все символьные ссылки без использования утилиты file
+
+Пункт_5
+[Пт 21 фев 2025 11:03:29 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find --help
+Использование: find [-H] [-L] [-P] [-Oуровень] [-D debugopts] [путь…] [выражение]
+
+Путём по умолчанию является текущий каталог; выражение по умолчанию: -print.
+Выражение может состоять из операторов, параметров, тестов и действий.
+
+Операторы (в нисходящем порядке; -and берётся по умолчанию, если других нет):
+      ( EXPR )   ! EXPR   -not EXPR   EXPR1 -a EXPR2   EXPR1 -and EXPR2
+      EXPR1 -o EXPR2   EXPR1 -or EXPR2   EXPR1 , EXPR2
+
+Позиционные параметры (всегда истинны):
+      -daystart -follow -nowarn -regextype -warn
+
+Normal options (always true, specified before other expressions):
+      -depth -files0-from FILE -maxdepth LEVELS -mindepth LEVELS
+       -mount -noleaf -xdev -ignore_readdir_race -noignore_readdir_race
+
+Тесты (N может быть +N, -N или N):
+      -amin N -anewer FILE -atime N -cmin N -cnewer ФАЙЛ -context КОНТЕКСТ
+      -ctime N -empty -false -fstype ТИП -gid N -group ИМЯ -ilname ШАБЛОН
+      -iname ШАБЛОН -inum N -iwholename ШАБЛОН -iregex ШАБЛОН
+      -links N -lname ШАБЛОН -mmin N -mtime N -name ШАБЛОН -newer ФАЙЛ
+      -nouser -nogroup -path ШАБЛОН -perm [-/]РЕЖИМ -regex ШАБЛОН
+      -readable -writable -executable
+      -wholename ШАБЛОН -size N[bcwkMG] -true -type [bcdpflsD] -uid N
+      -used N -user ИМЯ -xtype [bcdpfls]
+
+Действия:
+      -delete -print0 -printf ФОРМАТ -fprintf ФАЙЛ ФОРМАТ -print 
+      -fprint0 ФАЙЛ -fprint ФАЙЛ -ls -fls ФАЙЛ -prune -quit
+      -exec КОМАНДА ; -exec КОМАНДА {} + -ok КОМАНДА ;
+      -execdir КОМАНДА ; -execdir КОМАНДА {} + -okdir КОМАНДА ;
+
+Остальные общие параметры:
+      --help                   показать эту справку и выйти
+      --version                показать номер версии и выйти
+
+Допустимые аргументы для -D:
+exec, opt, rates, search, stat, time, tree, all, help
+Описание параметров доступно по команде «-D help» или в find(1)
+
+Также обратитесь к документации https://www.gnu.org/software/findutils/.
+Отправляйте сообщения об ошибках (и следите за ходом исправления)
+в программе «find» через страницу GNU findutils по адресу
+https://savannah.gnu.org/bugs/?group=findutils или, если
+нет доступа к веб, то пишите на адрес <bug-findutils@gnu.org>.
+
+### Фильтрация по типу
+[Пт 21 фев 2025 11:03:56 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type d
+/home/alexander/Рабочий стол/Project_Bot/os_lb1
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__
+
+[Пт 21 фев 2025 11:05:17 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script3.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/settings.json
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/c_cpp_properties.json
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/launch.json
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/main.c
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/a.out
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/res.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/draw.cpython-310.pyc
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/graham.cpython-310.pyc
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/hlink
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/all_files.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/hardlinks.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script4.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/scr.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script2.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/first.log
+[Пт 21 фев 2025 11:08:07 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+### Пример применения команд вместе с find
+[Пт 21 фев 2025 11:08:09 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f -exec ls -l {};
+find: отсутствует аргумент у «-exec»
+[Пт 21 фев 2025 11:08:19 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f -exec ls -l {} \;
+-rwxrwxr-x 1 alexander alexander 656 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/script.sh'
+-rwxrwxr-x 1 alexander alexander 246 фев 25 22:36 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/script3.sh'
+-rw-rw-r-- 1 alexander alexander 1364 фев 28 09:40 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/settings.json'
+-rw-rw-r-- 1 alexander alexander 344 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/c_cpp_properties.json'
+-rw-rw-r-- 1 alexander alexander 650 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/launch.json'
+-rw-rw-r-- 3 alexander alexander 319 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/main.c'
+-rwxrwxr-x 1 alexander alexander 16080 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/a.out'
+-rw-rw-r-- 1 alexander alexander 214 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/res.txt'
+-rw-rw-r-- 1 alexander alexander 863 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/draw.cpython-310.pyc'
+-rw-rw-r-- 1 alexander alexander 1596 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/graham.cpython-310.pyc'
+-rw-rw-r-- 3 alexander alexander 319 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/hlink'
+-rw-rw-r-- 1 alexander alexander 36643012 фев 20 23:17 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/all_files.txt'
+-rw-rw-r-- 1 alexander alexander 196 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/hardlinks.txt'
+-rwxrwxr-x 1 alexander alexander 174 фев 25 22:13 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/script4.sh'
+-rwxrwxr-x 1 alexander alexander 101 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/scr.sh'
+-rwxrwxr-x 1 alexander alexander 441 фев 20 22:38 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/script2.sh'
+-rw-rw-r-- 1 alexander alexander 28773 фев 28 09:51 '/home/alexander/Рабочий стол/Project_Bot/os_lb1/first.log'
+[Пт 21 фев 2025 11:11:10 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f -exec stat {} \;
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/script.sh
+  Размер: 656           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678108      Ссылки: 1
+Доступ: (0775/-rwxrwxr-x)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-20 22:44:03.768805164 +0300
+Модифицирован: 2025-02-20 22:38:58.081495205 +0300
+Изменён:       2025-02-20 22:38:58.081495205 +0300
+Создан:        2025-02-20 22:38:58.081495205 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/script3.sh
+  Размер: 246           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678111      Ссылки: 1
+Доступ: (0775/-rwxrwxr-x)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-25 22:36:14.834061519 +0300
+Модифицирован: 2025-02-25 22:36:14.826061518 +0300
+Изменён:       2025-02-25 22:36:14.826061518 +0300
+Создан:        2025-02-20 22:39:56.659069932 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/settings.json
+  Размер: 1364          Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678104      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-28 09:40:36.986292960 +0300
+Модифицирован: 2025-02-28 09:40:36.808297301 +0300
+Изменён:       2025-02-28 09:40:36.808297301 +0300
+Создан:        2025-02-20 22:38:58.080495297 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/c_cpp_properties.json
+  Размер: 344           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678106      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-28 09:40:36.535303959 +0300
+Модифицирован: 2025-02-20 22:38:58.081495205 +0300
+Изменён:       2025-02-20 22:38:58.081495205 +0300
+Создан:        2025-02-20 22:38:58.081495205 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/launch.json
+  Размер: 650           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678105      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-28 09:40:34.405355914 +0300
+Модифицирован: 2025-02-20 22:38:58.081495205 +0300
+Изменён:       2025-02-20 22:38:58.081495205 +0300
+Создан:        2025-02-20 22:38:58.080495297 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/main.c
+  Размер: 319           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678091      Ссылки: 3
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-28 09:42:46.960136419 +0300
+Модифицирован: 2025-02-20 22:38:58.079495390 +0300
+Изменён:       2025-02-25 23:34:29.390031384 +0300
+Создан:        2025-02-20 22:38:58.079495390 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/a.out
+  Размер: 16080         Блоков: 32         Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678092      Ссылки: 1
+Доступ: (0775/-rwxrwxr-x)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-20 22:38:58.079495390 +0300
+Модифицирован: 2025-02-20 22:38:58.079495390 +0300
+Изменён:       2025-02-20 22:38:58.079495390 +0300
+Создан:        2025-02-20 22:38:58.079495390 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/res.txt
+  Размер: 214           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678107      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-25 23:35:20.445032942 +0300
+Модифицирован: 2025-02-20 22:38:58.081495205 +0300
+Изменён:       2025-02-20 22:38:58.081495205 +0300
+Создан:        2025-02-20 22:38:58.081495205 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/draw.cpython-310.pyc
+  Размер: 863           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678102      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-20 22:38:58.080495297 +0300
+Модифицирован: 2025-02-20 22:38:58.080495297 +0300
+Изменён:       2025-02-20 22:38:58.080495297 +0300
+Создан:        2025-02-20 22:38:58.080495297 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/graham.cpython-310.pyc
+  Размер: 1596          Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678101      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-20 22:38:58.080495297 +0300
+Модифицирован: 2025-02-20 22:38:58.080495297 +0300
+Изменён:       2025-02-20 22:38:58.080495297 +0300
+Создан:        2025-02-20 22:38:58.080495297 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/hlink
+  Размер: 319           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678091      Ссылки: 3
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-28 09:42:46.960136419 +0300
+Модифицирован: 2025-02-20 22:38:58.079495390 +0300
+Изменён:       2025-02-25 23:34:29.390031384 +0300
+Создан:        2025-02-20 22:38:58.079495390 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/all_files.txt
+  Размер: 36643012      Блоков: 71584      Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678083      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-20 23:17:37.248979159 +0300
+Модифицирован: 2025-02-20 23:17:34.136093504 +0300
+Изменён:       2025-02-20 23:17:34.136093504 +0300
+Создан:        2025-02-20 23:17:34.082095488 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/hardlinks.txt
+  Размер: 196           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678089      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-25 23:33:57.995030426 +0300
+Модифицирован: 2025-02-20 22:38:58.079495390 +0300
+Изменён:       2025-02-20 22:38:58.079495390 +0300
+Создан:        2025-02-20 22:38:58.078495482 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/script4.sh
+  Размер: 174           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 673547      Ссылки: 1
+Доступ: (0775/-rwxrwxr-x)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-25 22:13:22.957019652 +0300
+Модифицирован: 2025-02-25 22:13:22.945019652 +0300
+Изменён:       2025-02-25 22:13:22.945019652 +0300
+Создан:        2025-02-22 19:07:22.562607431 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/scr.sh
+  Размер: 101           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678090      Ссылки: 1
+Доступ: (0775/-rwxrwxr-x)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-25 22:14:02.126020848 +0300
+Модифицирован: 2025-02-20 22:38:58.079495390 +0300
+Изменён:       2025-02-20 22:38:58.079495390 +0300
+Создан:        2025-02-20 22:38:58.079495390 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/script2.sh
+  Размер: 441           Блоков: 8          Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678109      Ссылки: 1
+Доступ: (0775/-rwxrwxr-x)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-21 22:55:04.947281781 +0300
+Модифицирован: 2025-02-20 22:38:58.081495205 +0300
+Изменён:       2025-02-20 22:38:58.081495205 +0300
+Создан:        2025-02-20 22:38:58.081495205 +0300
+  Файл: /home/alexander/Рабочий стол/Project_Bot/os_lb1/first.log
+  Размер: 31376         Блоков: 64         Блок В/В: 4096   обычный файл
+Устройство: 259/6       Инода: 678088      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/alexander)   Gid: ( 1000/alexander)
+Доступ:        2025-02-28 09:55:03.215370618 +0300
+Модифицирован: 2025-02-28 09:55:03.207370811 +0300
+Изменён:       2025-02-28 09:55:03.207370811 +0300
+Создан:        2025-02-20 22:38:58.078495482 +0300
+### Фильтрация по имени
+[Пт 21 фев 2025 22:08:27 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол' -type f -name "main.py"
+/home/alexander/Рабочий стол/Snigirev_Aleksandr_lb1/src/main.py
+/home/alexander/Рабочий стол/Project_Bot/main.py
+/home/alexander/Рабочий стол/Project_Bot/bot/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/_pytest/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/pydantic/v1/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/pydantic/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/dotenv/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/markdown_it/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/pip/_internal/cli/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/pip/_internal/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/typer/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/uvicorn/main.py
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/watchfiles/main.py
+### Фильтрация по размеру файла
+[Пт 21 фев 2025 22:09:42 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол' -type f -size +10M
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/all_files.txt
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/grpc/_cython/cygrpc.cpython-310-x86_64-linux-gnu.so
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/numpy.libs/libscipy_openblas64_-99b71e71.so
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/uvloop/loop.cpython-310-x86_64-linux-gnu.so
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/PyQt6/Qt6/plugins/multimedia/libffmpegmediaplugin.so
+/home/alexander/Рабочий стол/Project_Bot/venv/lib/python3.10/site-packages/PyQt6/Qt6/lib/libicudata.so.73
+### Фильтрация по времени изменения
+[Пт 21 фев 2025 22:11:57 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f -mtime 2
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script3.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script4.sh
+[Пт 21 фев 2025 22:13:32 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f -atime 2
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script3.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/res.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/hardlinks.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script4.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/scr.sh
+[Пт 21 фев 2025 22:15:17 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f -ctime +6
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/c_cpp_properties.json
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/launch.json
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/a.out
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/res.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/draw.cpython-310.pyc
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/graham.cpython-310.pyc
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/all_files.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/hardlinks.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/scr.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script2.sh
+
+### Примеры вложенных команд (изменение прав доступа ко всем обычным файлам, название которых содержит слово "script"
+[Пт 21 фев 2025 22:19:35 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f -name "script*" -exec chmod -x {} \;
+[Пт 21 фев 2025 22:19:27 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./script.sh
+[Пт 21 фев 2025 22:20:43 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 -type f -name "script*" -exec chmod +x {} \;
+[Пт 21 фев 2025 22:23:56 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./script.sh
+Использование: ./script.sh
+### Пример использования логических операторов внутри поиска
+[Пт 21 фев 2025 22:29:11 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 \( -type f -or -type l \)
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script3.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/settings.json
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/c_cpp_properties.json
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/.vscode/launch.json
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/link.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/main.c
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/a.out
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/res.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/draw.cpython-310.pyc
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/__pycache__/graham.cpython-310.pyc
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/hlink
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/all_files.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/hardlinks.txt
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script4.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/scr.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/link
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script2.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/first.log
+[Пт 21 фев 2025 22:31:13 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+[Пт 21 фев 2025 22:32:01 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ find /home/alexander/'Рабочий стол'/Project_Bot/os_lb1 \( -type f -and -name "script*" 
+\)
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script3.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script4.sh
+/home/alexander/Рабочий стол/Project_Bot/os_lb1/script2.sh
+
+Пункт_6:
+
+[Пт 21 фев 2025 23:09:24 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол$ od link3
+0000000 064443 061556 072554 062544 071474 062164 067551 064056
+0000020 005076 064443 061556 072554 062544 071474 062164 064554
+0000040 027142 037150 005012 067151 020164 064546 062156 066537
+0000060 074141 064450 072156 020052 071141 024562 005173 020040
+0000100 020040 067151 020164 060555 020170 020075 035460 020012
+0000120 020040 063040 071157 064450 072156 064440 030075 020073
+0000140 036151 030061 030060 030060 035460 025551 024453 005173
+0000160 020040 020040 020040 020040 063151 060450 071162 064533
+0000200 037135 060555 024570 066440 074141 060475 071162 064533
+0000220 035535 020012 020040 076440 020012 020040 071040 072145
+0000240 071165 020156 060555 035570 076412 005012 067151 020164
+0000260 060555 067151 024450 005173 020040 020040 067151 020164
+0000300 071141 055562 030061 030060 030060 056460 005073 020040
+0000320 020040 067546 024162 067151 020164 036551 035460 064440
+0000340 030474 030060 030060 030060 020073 025551 024453 005173
+0000360 020040 020040 020040 020040 071141 055562 056551 036440
+0000400 071040 067141 024144 022451 030061 030060 030060 005073
+0000420 020040 020040 005175 020040 020040 071160 067151 063164
+0000440 021050 062045 067134 026042 063040 067151 057544 060555
+0000460 024170 071141 024562 035451 020012 020040 005040 000175
+0000477
+[Пт 21 фев 2025 23:09:45 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол$ od link3
+0000000 064443 061556 072554 062544 071474 062164 067551 064056
+0000020 005076 064443 061556 072554 062544 071474 062164 064554
+0000040 027142 037150 005012 067151 020164 064546 062156 066537
+0000060 074141 064450 072156 020052 071141 024562 005173 020040
+0000100 020040 067151 020164 060555 020170 020075 035460 020012
+0000120 020040 063040 071157 064450 072156 064440 030075 020073
+0000140 036151 030061 030060 030060 035460 025551 024453 005173
+0000160 020040 020040 020040 020040 063151 060450 071162 064533
+0000200 037135 060555 024570 066440 074141 060475 071162 064533
+0000220 035535 020012 020040 076440 020012 020040 071040 072145
+0000240 071165 020156 060555 035570 076412 005012 067151 020164
+0000260 060555 067151 024450 005173 020040 020040 067151 020164
+0000300 071141 055562 030061 030060 030060 056460 005073 020040
+0000320 020040 067546 024162 067151 020164 036551 035460 064440
+0000340 030474 030060 030060 030060 020073 025551 024453 005173
+0000360 020040 020040 020040 020040 071141 055562 056551 036440
+0000400 071040 067141 024144 022451 030061 030060 030060 005073
+0000420 020040 020040 005175 020040 020040 071160 067151 063164
+0000440 021050 062045 067134 026042 063040 067151 057544 060555
+0000460 024170 071141 024562 035451 020012 020040 005040 000175
+0000477
+[Пт 21 фев 2025 23:09:59 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол$ cd Project_Bot/os_lb1
+[Пт 21 фев 2025 23:10:51 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ od main.c
+0000000 064443 061556 072554 062544 071474 062164 067551 064056
+0000020 005076 064443 061556 072554 062544 071474 062164 064554
+0000040 027142 037150 005012 067151 020164 064546 062156 066537
+0000060 074141 064450 072156 020052 071141 024562 005173 020040
+0000100 020040 067151 020164 060555 020170 020075 035460 020012
+0000120 020040 063040 071157 064450 072156 064440 030075 020073
+0000140 036151 030061 030060 030060 035460 025551 024453 005173
+0000160 020040 020040 020040 020040 063151 060450 071162 064533
+0000200 037135 060555 024570 066440 074141 060475 071162 064533
+0000220 035535 020012 020040 076440 020012 020040 071040 072145
+0000240 071165 020156 060555 035570 076412 005012 067151 020164
+0000260 060555 067151 024450 005173 020040 020040 067151 020164
+0000300 071141 055562 030061 030060 030060 056460 005073 020040
+0000320 020040 067546 024162 067151 020164 036551 035460 064440
+0000340 030474 030060 030060 030060 020073 025551 024453 005173
+0000360 020040 020040 020040 020040 071141 055562 056551 036440
+0000400 071040 067141 024144 022451 030061 030060 030060 005073
+0000420 020040 020040 005175 020040 020040 071160 067151 063164
+0000440 021050 062045 067134 026042 063040 067151 057544 060555
+0000460 024170 071141 024562 035451 020012 020040 005040 000175
+0000477
+### Вывод: при передаче символьной ссылки вернет содержиоме самого файла в 8-ричной СС
+[Пт 21 фев 2025 23:11:16 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ od hlink
+0000000 064443 061556 072554 062544 071474 062164 067551 064056
+0000020 005076 064443 061556 072554 062544 071474 062164 064554
+0000040 027142 037150 005012 067151 020164 064546 062156 066537
+0000060 074141 064450 072156 020052 071141 024562 005173 020040
+0000100 020040 067151 020164 060555 020170 020075 035460 020012
+0000120 020040 063040 071157 064450 072156 064440 030075 020073
+0000140 036151 030061 030060 030060 035460 025551 024453 005173
+0000160 020040 020040 020040 020040 063151 060450 071162 064533
+0000200 037135 060555 024570 066440 074141 060475 071162 064533
+0000220 035535 020012 020040 076440 020012 020040 071040 072145
+0000240 071165 020156 060555 035570 076412 005012 067151 020164
+0000260 060555 067151 024450 005173 020040 020040 067151 020164
+0000300 071141 055562 030061 030060 030060 056460 005073 020040
+0000320 020040 067546 024162 067151 020164 036551 035460 064440
+0000340 030474 030060 030060 030060 020073 025551 024453 005173
+0000360 020040 020040 020040 020040 071141 055562 056551 036440
+0000400 071040 067141 024144 022451 030061 030060 030060 005073
+0000420 020040 020040 005175 020040 020040 071160 067151 063164
+0000440 021050 062045 067134 026042 063040 067151 057544 060555
+0000460 024170 071141 024562 035451 020012 020040 005040 000175
+0000477
+### Для жесткой ссылки - аналогично
+[Пт 21 фев 2025 23:12:07 MSK]alexander@alexander-AORUS-15P-XD:/$ sudo od debug
+[sudo] пароль для alexander: 
+0000000 021133 030062 032062 030455 026461 034462 030524 035063
+0000020 033062 032072 027064 030461 021070 020054 042042 041105
+0000040 043525 026042 021040 061165 067165 072564 071160 027157
+0000060 067543 063156 063551 026042 021040 060560 071562 057545
+0000100 067543 063156 063551 026042 032040 033067 020054 052442
+0000120 064563 063556 061440 064554 067145 020164 067543 063156
+0000140 063551 071165 072141 067551 020156 064546 062554 060440
+0000160 020164 062457 061564 072457 072542 072156 026565 062141
+0000200 060566 072156 063541 027545 060565 066143 062551 072156
+0000220 061456 067157 021146 020054 076573 005135 021133 030062
+0000240 032062 030455 026461 034462 030524 035063 033062 032072
+0000260 027064 031061 021060 020054 042042 041105 043525 026042
+0000300 021040 061165 067165 072564 071160 027157 074563 072163
+0000320 066545 026042 021040 067554 062141 063137 066151 021145
+0000340 020054 031465 026066 021040 062522 062141 067151 020147
+0000360 064546 062554 020072 062457 061564 072457 072542 072156
+0000400 026565 062141 060566 072156 063541 027545 060565 066143
+0000420 062551 072156 061456 067157 021146 020054 076573 005135
+0000440 021133 030062 032062 030455 026461 034462 030524 035063
+0000460 033062 032072 027064 031061 021060 020054 042042 041105
+0000500 043525 026042 021040 061165 067165 072564 071160 027157
+0000520 064546 062554 027163 064546 062554 021163 020054 071042
+0000540 060545 021144 020054 034065 020054 052042 064562 062145
+0000560 072040 020157 067554 062141 027440 060566 027562 064554
+0000600 027542 061165 067165 072564 060455 073144 067141 060564
+0000620 062547 070057 064562 060566 062564 072457 062563 026562
+0000640 067543 063156 063551 065056 067563 020156 072542 020164
+0000660 064546 062554 062040 062557 020163 067556 020164 074145
+0000700 071551 021164 020054 076573 005135 021133 030062 032062
+0000720 030455 026461 034462 030524 035063 033062 032072 027064
+0000740 031061 021060 020054 042042 041105 043525 026042 021040
+0000760 061165 067165 072564 071160 027157 064546 062554 027163
+0001000 064546 062554 021163 020054 071042 060545 021144 020054
+0001020 034065 020054 052042 064562 062145 072040 020157 067554
+0001040 062141 027440 060566 027562 064554 027542 061165 067165
+0001060 072564 060455 073144 067141 060564 062547 072457 062563
+0001100 026562 067543 063156 063551 065056 067563 020156 072542
+0001120 020164 064546 062554 062040 062557 020163 067556 020164
+0001140 074145 071551 021164 020054 076573 005135
+0001154
+[Пт 28 фев 2025 09:42:38 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ date
+[Пт 28 фев 2025 09:42:38 MSK]
+[Пт 28 фев 2025 09:44:19 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ hexdump main.c
+0000000 6923 636e 756c 6564 733c 6474 6f69 682e
+0000010 0a3e 6923 636e 756c 6564 733c 6474 696c
+0000020 2e62 3e68 0a0a 6e69 2074 6966 646e 6d5f
+0000030 7861 6928 746e 202a 7261 2972 0a7b 2020
+0000040 2020 6e69 2074 616d 2078 203d 3b30 200a
+0000050 2020 6620 726f 6928 746e 6920 303d 203b
+0000060 3c69 3031 3030 3030 3b30 2b69 292b 0a7b
+0000070 2020 2020 2020 2020 6669 6128 7272 695b
+0000080 3e5d 616d 2978 6d20 7861 613d 7272 695b
+0000090 3b5d 200a 2020 7d20 200a 2020 7220 7465
+00000a0 7275 206e 616d 3b78 7d0a 0a0a 6e69 2074
+00000b0 616d 6e69 2928 0a7b 2020 2020 6e69 2074
+00000c0 7261 5b72 3031 3030 3030 5d30 0a3b 2020
+00000d0 2020 6f66 2872 6e69 2074 3d69 3b30 6920
+00000e0 313c 3030 3030 3030 203b 2b69 292b 0a7b
+00000f0 2020 2020 2020 2020 7261 5b72 5d69 3d20
+0000100 7220 6e61 2864 2529 3031 3030 3030 0a3b
+0000110 2020 2020 0a7d 2020 2020 7270 6e69 6674
+0000120 2228 6425 6e5c 2c22 6620 6e69 5f64 616d
+0000130 2878 7261 2972 3b29 200a 2020 0a20 007d
+000013f
+
+Пукнт_7:
+
+[Пт 28 фев 2025 09:47:56 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ mkdir test_catalog
+[Пт 28 фев 2025 09:47:59 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ du -sh test_catalog
+4,0K    test_catalog
+[Пт 28 фев 2025 09:48:08 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -lh main.c
+-rw-rw-r-- 3 alexander alexander 331 фев 28 10:09 main.c
+[Пт 28 фев 2025 09:57:23 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./script7.sh test_catalog
+Каталог test_catalog успешно создан
+Стартовый размер каталога: 4,0K test_catalog
+Добавляем файлы...
+main.c добавлен в каталог
+Текущий размер: 8,0K    test_catalog
+first.log добавлен в каталог
+Текущий размер: 56K     test_catalog
+Файл main.c удален из каталога
+Файл first.log удален из каталога
+Текущий размер: 4,0K    test_catalog
+Текущий размер: 4,0K    test_catalog
+[Пт 28 фев 2025 10:03:04 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./script7.sh test_catalog
+Каталог test_catalog успешно создан
+Стартовый размер каталога: 4,0K test_catalog
+Добавляем файлы...
+main.c добавлен в каталог
+Текущий размер: 8,0K    test_catalog
+first.log добавлен в каталог
+Текущий размер: 56K     test_catalog
+Текущий размер: 52K     test_catalog
+Файл main.c удален из каталога
+Файл first.log удален из каталога
+Текущий размер: 4,0K    test_catalog
+[Пт 28 фев 2025 10:05:19 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+Пункт_8:
+[Пт 28 фев 2025 11:03:48 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ date
+[Пт 28 фев 2025 11:05:31 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ cat /etc/passwd | head 
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+### Права доступа
+[Пт 28 фев 2025 11:03:48 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l /etc/passwd
+-rw-r--r-- 1 root root 3179 ноя 29 19:02 /etc/passwd
+### доступен для чтения, но изменять может только root
+[Пт 28 фев 2025 11:04:01 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ cat /etc/shadow | head 
+cat: /etc/shadow: Отказано в доступе
+### Файл с паролями недоступен для чтения обычным пользователям
+[Пт 28 фев 2025 11:06:12 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo cat /etc/shadow | head 
+[sudo] пароль для alexander: 
+root:!:19608:0:99999:7:::
+daemon:*:19576:0:99999:7:::
+bin:*:19576:0:99999:7:::
+sys:*:19576:0:99999:7:::
+sync:*:19576:0:99999:7:::
+games:*:19576:0:99999:7:::
+man:*:19576:0:99999:7:::
+lp:*:19576:0:99999:7:::
+mail:*:19576:0:99999:7:::
+news:*:19576:0:99999:7:::
+[Пт 28 фев 2025 11:08:19 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l /etc/shadow
+-rw-r----- 1 root shadow 1574 ноя 29 19:02 /etc/shadow
+[Пт 28 фев 2025 11:09:23 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l /usr/bin/passwd
+-rwsr-xr-x 1 root root 64152 мая 30  2024 /usr/bin/passwd
+[Пт 28 фев 2025 11:12:02 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ passwd
+Смена пароля для alexander.
+Текущий пароль: 
+### Обычный пользователь может поменять только свой пароль
+### root может менять любые паролями
+### passwd имеет временный доступ к /etc/shadow без sudo
+
+Пункт_9.1:
+[Пт 28 фев 2025 22:12:45 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ date
+[Пт 28 фев 2025 22:12:48 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ touch test_catalog/test_file_3.txt
+[Пт 28 фев 2025 22:13:11 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ touch test_catalog/test_file_4.txt
+[Пт 28 фев 2025 22:13:16 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ touch test_catalog/test_file_5.txt
+[Пт 28 фев 2025 22:13:35 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l test_catalog
+итого 0
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:15 test_file_1.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:15 test_file_2.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_3.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_4.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_5.txt
+[Пт 28 фев 2025 22:14:11 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod test_file_1.txt
+chmod: пропущен операнд после «test_file_1.txt»
+По команде «chmod --help» можно получить дополнительную информацию.
+[Пт 28 фев 2025 22:14:15 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod +x test_file_1.txt
+chmod: невозможно получить доступ к 'test_file_1.txt': Нет такого файла или каталога
+[Пт 28 фев 2025 22:14:21 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod +x test_catalog/test_file_1.txt
+### Изменение прав доступа файла
+[Пт 28 фев 2025 22:14:32 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l test_catalog
+итого 0
+-rwxrwxr-x 1 alexander alexander 0 фев 28 22:15 test_file_1.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:15 test_file_2.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_3.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_4.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_5.txt
+[Пт 28 фев 2025 22:16:01 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod 600 test_catalog/test_file_2.txt
+### Запрет на чтение другим пользователям
+[Пт 28 фев 2025 22:16:14 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l test_catalog
+итого 0
+-rwxrwxr-x 1 alexander alexander 0 фев 28 22:15 test_file_1.txt
+-rw------- 1 alexander alexander 0 фев 28 22:15 test_file_2.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_3.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_4.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_5.txt
+[Пт 28 фев 2025 22:16:37 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l
+итого 35908
+-rw-rw-r-- 1 alexander alexander 36643012 фев 20 23:17 all_files.txt
+-rwxrwxr-x 1 alexander alexander    16080 фев 20 22:38 a.out
+-rw-rw-r-- 1 alexander alexander    52892 фев 28 12:28 first.log
+-rw-rw-r-- 1 alexander alexander      196 фев 20 22:38 hardlinks.txt
+-rw-rw-r-- 3 alexander alexander      331 фев 28 10:09 hlink
+lrwxrwxrwx 1 alexander alexander        6 фев 25 22:13 link -> main.c
+lrwxrwxrwx 1 alexander alexander        6 фев 20 22:38 link.txt -> scr.sh
+-rw-rw-r-- 3 alexander alexander      331 фев 28 10:09 main.c
+drwxrwxr-x 2 alexander alexander     4096 фев 20 22:38 __pycache__
+-rw-rw-r-- 1 alexander alexander      214 фев 20 22:38 res.txt
+-rwxrwxr-x 1 alexander alexander      441 фев 20 22:38 script2.sh
+-rwxrwxr-x 1 alexander alexander      246 фев 25 22:36 script3.sh
+-rwxrwxr-x 1 alexander alexander      174 фев 25 22:13 script4.sh
+-rwxrwxr-x 1 alexander alexander      928 фев 28 11:01 script7.sh
+-rwxrwxr-x 1 alexander alexander      656 фев 20 22:38 script.sh
+-rwxrwxr-x 1 alexander alexander      101 фев 20 22:38 scr.sh
+drwxrwxr-x 2 alexander alexander     4096 фев 28 22:16 test_catalog
+[Пт 28 фев 2025 22:16:41 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod 700 test_catalog
+### Запрет на действия с каталогом другим пользователям
+[Пт 28 фев 2025 22:16:45 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l
+итого 35908
+-rw-rw-r-- 1 alexander alexander 36643012 фев 20 23:17 all_files.txt
+-rwxrwxr-x 1 alexander alexander    16080 фев 20 22:38 a.out
+-rw-rw-r-- 1 alexander alexander    52892 фев 28 12:28 first.log
+-rw-rw-r-- 1 alexander alexander      196 фев 20 22:38 hardlinks.txt
+-rw-rw-r-- 3 alexander alexander      331 фев 28 10:09 hlink
+lrwxrwxrwx 1 alexander alexander        6 фев 25 22:13 link -> main.c
+lrwxrwxrwx 1 alexander alexander        6 фев 20 22:38 link.txt -> scr.sh
+-rw-rw-r-- 3 alexander alexander      331 фев 28 10:09 main.c
+drwxrwxr-x 2 alexander alexander     4096 фев 20 22:38 __pycache__
+-rw-rw-r-- 1 alexander alexander      214 фев 20 22:38 res.txt
+-rwxrwxr-x 1 alexander alexander      441 фев 20 22:38 script2.sh
+-rwxrwxr-x 1 alexander alexander      246 фев 25 22:36 script3.sh
+-rwxrwxr-x 1 alexander alexander      174 фев 25 22:13 script4.sh
+-rwxrwxr-x 1 alexander alexander      928 фев 28 11:01 script7.sh
+-rwxrwxr-x 1 alexander alexander      656 фев 20 22:38 script.sh
+-rwxrwxr-x 1 alexander alexander      101 фев 20 22:38 scr.sh
+drwx------ 2 alexander alexander     4096 фев 28 22:16 test_catalog
+[Пт 28 фев 2025 22:16:57 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod 640 test_catalog/test_file_3.txt
+### Делаем файл доступным только для группы
+[Пт 28 фев 2025 22:19:13 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l test_catalog
+итого 0
+-rwxrwxr-x 1 alexander alexander 0 фев 28 22:15 test_file_1.txt
+-rw------- 1 alexander alexander 0 фев 28 22:15 test_file_2.txt
+-rw-r----- 1 alexander alexander 0 фев 28 22:16 test_file_3.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_4.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_5.txt
+[Пт 28 фев 2025 22:19:49 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo chown root test_catalog/test_file_4.txt 
+### Смена владельца файла
+[Пт 28 фев 2025 22:20:14 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l test_catalog
+итого 0
+-rwxrwxr-x 1 alexander alexander 0 фев 28 22:15 test_file_1.txt
+-rw------- 1 alexander alexander 0 фев 28 22:15 test_file_2.txt
+-rw-r----- 1 alexander alexander 0 фев 28 22:16 test_file_3.txt
+-rw-rw-r-- 1 root      alexander 0 фев 28 22:16 test_file_4.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_5.txt
+[Пт 28 фев 2025 22:20:19 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+[Пт 28 фев 2025 22:20:24 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo chown root test_catalog/test_file_2.txt 
+[Пт 28 фев 2025 22:20:32 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l test_catalog
+итого 0
+-rwxrwxr-x 1 alexander alexander 0 фев 28 22:15 test_file_1.txt
+-rw------- 1 root      alexander 0 фев 28 22:15 test_file_2.txt
+-rw-r----- 1 alexander alexander 0 фев 28 22:16 test_file_3.txt
+-rw-rw-r-- 1 root      alexander 0 фев 28 22:29 test_file_4.txt
+-rw-rw-r-- 1 alexander alexander 0 фев 28 22:16 test_file_5.txt
+### Теперь только root может взаимодействовать с test_file_2.txt
+[Пт 28 фев 2025 22:30:09 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo chown :sudo test_catalog/test_file_5.txt
+[Пт 28 фев 2025 22:30:39 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l test_catalog
+итого 0
+-rwxrwxr-x 1 alexander alexander 0 фев 28 22:15 test_file_1.txt
+-rw------- 1 root      alexander 0 фев 28 22:15 test_file_2.txt
+-rw-r----- 1 alexander alexander 0 фев 28 22:16 test_file_3.txt
+-rw-rw-r-- 1 root      alexander 0 фев 28 22:29 test_file_4.txt
+-rw-rw-r-- 1 alexander sudo      0 фев 28 22:16 test_file_5.txt
+### У test_file_5.txt владелец остался тем же, но группа поменялась
+[Пт 28 фев 2025 22:31:04 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo chown root:sudo test_catalog/test_file_3.txt
+[Пт 28 фев 2025 22:33:51 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l test_catalog
+итого 4
+-rwxrwxr-x 1 alexander alexander 0 фев 28 22:15 test_file_1.txt
+-rw------- 1 root      alexander 0 фев 28 22:15 test_file_2.txt
+-rw-r----- 1 root      sudo      0 фев 28 22:16 test_file_3.txt
+-rw-rw-r-- 1 root      alexander 0 фев 28 22:29 test_file_4.txt
+-rw-rw-r-- 1 alexander sudo      5 фев 28 22:33 test_file_5.txt
+Пункт_9.2:
+[Сб 8 мар 2025 15:04:01 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ gcc test_program_9.c -o t_p
+[Сб 8 мар 2025 15:05:21 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l t_p
+-rwxrwxr-x 1 alexander alexander 16056 мар  8 15:04 t_p
+[Сб 8 мар 2025 15:05:35 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./t_p
+Пользователь: alexander
+ Права: 1000
+[Сб 8 мар 2025 15:05:47 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo chown root t_p
+[sudo] пароль для alexander: 
+[Сб 8 мар 2025 15:05:56 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./t_p
+Пользователь: alexander
+ Права: 1000
+[Сб 8 мар 2025 15:06:32 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+[Сб 8 мар 2025 15:06:45 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l t_p
+-rwxrwxr-x 1 root alexander 16056 мар  8 15:04 t_p
+[Сб 8 мар 2025 15:06:57 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l t_p
+-rwsrwxr-x 1 root alexander 16056 мар  8 15:04 t_p
+[Сб 8 мар 2025 15:07:21 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./t_p
+Пользователь: alexander
+ Права: 0
+Пункт_9.3:
+[Сб 8 мар 2025 15:09:08 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ echo "STROKA" > file93.txt
+[Сб 8 мар 2025 15:11:16 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod 400 file93.txt
+[Сб 8 мар 2025 15:11:21 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l file93.txt
+-r-------- 1 alexander alexander 7 мар  8 15:10 file93.txt
+[Сб 8 мар 2025 15:13:12 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ cat file93.txt
+STROKA
+[Сб 8 мар 2025 15:13:34 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod 040 file93.txt
+[Сб 8 мар 2025 15:14:51 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l file93.txt
+----r----- 1 alexander alexander 7 мар  8 15:10 file93.txt
+[Сб 8 мар 2025 15:14:57 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ cat file93.txt
+cat: file93.txt: Отказано в доступе
+Пункт_9.4:
+# - r - read - доступ на чтение, можно читать содержимое файлов и каталогов
+# - w - write - доступ на запись, можно изменять файлы и каталоги
+# - x - execute - доступ на исполнение, можно запускать исполняемые файлы
+Пункт_10:
+[Сб 8 мар 2025 16:24:05 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ echo 'test' > file10.txt
+[Сб 8 мар 2025 16:24:26 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l file10.txt
+-rw-rw-r-- 1 alexander alexander 5 мар  8 16:24 file10.txt
+[Сб 8 мар 2025 16:24:35 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ chmod 600 file10.txt
+[Сб 8 мар 2025 16:24:47 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l file10.txt
+-rw------- 1 alexander alexander 5 мар  8 16:24 file10.txt
+[Сб 8 мар 2025 16:26:04 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo chown sanchous file10.txt
+[sudo] пароль для alexander: 
+### Изменяем владельца файла на sanchous
+[Сб 8 мар 2025 16:26:13 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l file10.txt
+-rw------- 1 sanchous alexander 5 мар  8 16:24 file10.txt
+[Сб 8 мар 2025 15:42:17 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ gcc test_program_10.c -o t_p
+[Сб 8 мар 2025 15:42:21 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l t_p
+-rwxrwxr-x 1 alexander alexander 16256 мар  8 16:42 t_p
+[Сб 8 мар 2025 16:42:34 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./t_p file10.txt
+Open File error: Permission denied
+### У исполняемого файла нет прав на файл
+[Сб 8 мар 2025 16:43:45 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo usermod -aG sanchous alexander
+[sudo] пароль для alexander: 
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./t_p file10.txt
+Open File error: Permission denied
+### После добавления в группу тоже
+[Сб 8 мар 2025 16:44:01 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+[Сб 8 мар 2025 16:44:14 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo chown sanchous t_p
+[Сб 8 мар 2025 16:44:28 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo chmod +s t_p
+[Сб 8 мар 2025 16:44:56 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ls -l t_p
+-rwsrwsr-x 1 sanchous alexander 16256 мар  8 16:42 t_p
+[Сб 8 мар 2025 16:45:30 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./t_p
+Usage: ./t_p <file>
+Open File error: Bad address
+[Сб 8 мар 2025 16:51:59 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ ./t_p file10.txt
+test
+
+Пункт_11:
+[Сб 01 мар 2025 12:46:57 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ date
+[Сб 01 мар 2025 12:47:03 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ df -h
+Файл.система   Размер Использовано  Дост Использовано% Cмонтировано в
+tmpfs            1,6G         2,5M  1,6G            1% /run
+/dev/nvme0n1p6    92G          27G   60G           31% /
+tmpfs            7,7G          51M  7,7G            1% /dev/shm
+tmpfs            5,0M          12K  5,0M            1% /run/lock
+efivarfs         192K         120K   68K           64% /sys/firmware/efi/efivars
+/dev/nvme0n1p1   256M          59M  198M           23% /boot/efi
+tmpfs            1,6G         144K  1,6G            1% /run/user/1000
+/dev/sda1         30G         2,9G   27G           10% /media/alexander/________ ### Флешка
+[Сб 01 мар 2025 12:47:14 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ lsblk -f
+NAME        FSTYPE   FSVER LABEL                            UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+loop0       squashfs 4.0                                                                               0   100% /snap/bare/5
+loop1       squashfs 4.0                                                                               0   100% /snap/code/176
+loop2       squashfs 4.0                                                                               0   100% /snap/code/184
+loop3       squashfs 4.0                                                                               0   100% /snap/core18/2846
+loop4       squashfs 4.0                                                                               0   100% /snap/core18/2855
+loop5       squashfs 4.0                                                                               0   100% /snap/core20/2496
+loop6       squashfs 4.0                                                                               0   100% /snap/core20/2434
+loop7       squashfs 4.0                                                                               0   100% /snap/core22/1722
+loop8       squashfs 4.0                                                                               0   100% /snap/core22/1748
+loop9       squashfs 4.0                                                                               0   100% /snap/curl/1754
+loop10      squashfs 4.0                                                                               0   100% /snap/core24/739
+loop11      squashfs 4.0                                                                               0   100% /snap/curl/2283
+loop12      squashfs 4.0                                                                               0   100% /snap/firefox/5361
+loop13      squashfs 4.0                                                                               0   100% /snap/firefox/5783
+loop14      squashfs 4.0                                                                               0   100% /snap/firmware-updater/147
+loop15      squashfs 4.0                                                                               0   100% /snap/gnome-42-2204/141
+loop16      squashfs 4.0                                                                               0   100% /snap/gnome-42-2204/176
+loop17      squashfs 4.0                                                                               0   100% /snap/firmware-updater/167
+loop18      squashfs 4.0                                                                               0   100% /snap/gtk-common-themes/1535
+loop19      squashfs 4.0                                                                               0   100% /snap/pycharm-community/397
+loop20      squashfs 4.0                                                                               0   100% /snap/snap-store/1216
+loop21      squashfs 4.0                                                                               0   100% /snap/pycharm-community/404
+loop22      squashfs 4.0                                                                               0   100% /snap/snap-store/1248
+loop23      squashfs 4.0                                                                               0   100% /snap/snapd/23258
+loop24      squashfs 4.0                                                                               0   100% /snap/snapd-desktop-integration/178
+loop25      squashfs 4.0                                                                               0   100% /snap/snapd/23545
+loop26      squashfs 4.0                                                                               0   100% /snap/thunderbird/581
+loop27      squashfs 4.0                                                                               0   100% /snap/snapd-desktop-integration/253
+loop28      squashfs 4.0                                                                               0   100% /snap/thunderbird/663
+sda                                                                                                             
+└─sda1      vfat     FAT32 \x94\x93\x94\x8b\x9b\x98\x8a\x80 24C9-08A9                              26,2G    10% /media/alexander/________
+nvme0n1                                                                                                         
+├─nvme0n1p1 vfat     FAT32 SYSTEM                           E004-1F0A                             197,5M    23% /boot/efi
+├─nvme0n1p2                                                                                                     
+├─nvme0n1p3 ntfs           Windows                          34AA04CEAA048E94                                    
+├─nvme0n1p4 ntfs           WinRE                            96C804DBC804BC0D                                    
+├─nvme0n1p5 ntfs           RecoveryImage                    CA1606D21606BF85                                    
+└─nvme0n1p6 ext4     1.0                                    227a3a9c-65eb-4f2b-b0f3-806de1a2bd2a   59,8G    29% /var/snap/firefox/common/host-hunspell
+                                                                                                                /
+[Сб 01 мар 2025 12:47:32 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+[Сб 01 мар 2025 12:47:45 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ cat /proc/filesystems
+nodev   sysfs
+nodev   tmpfs
+nodev   bdev
+nodev   proc
+nodev   cgroup
+nodev   cgroup2
+nodev   cpuset
+nodev   devtmpfs
+nodev   configfs
+nodev   debugfs
+nodev   tracefs
+nodev   securityfs
+nodev   sockfs
+nodev   bpf
+nodev   pipefs
+nodev   ramfs
+nodev   hugetlbfs
+nodev   devpts
+        ext3
+        ext2
+        ext4
+        squashfs
+        vfat
+nodev   ecryptfs
+        fuseblk
+nodev   fuse
+nodev   fusectl
+nodev   efivarfs
+nodev   mqueue
+nodev   resctrl
+nodev   pstore
+nodev   autofs
+nodev   binfmt_misc
+[Сб 01 мар 2025 12:47:57 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+[Сб 01 мар 2025 12:48:35 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ lsblk -f /dev/sda1
+NAME FSTYPE FSVER LABEL                            UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sda1 vfat   FAT32 \x94\x93\x94\x8b\x9b\x98\x8a\x80 24C9-08A9                              26,2G    10% /media/alexander/________
+[Сб 01 мар 2025 12:50:12 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 
+[Сб 01 мар 2025 12:46:57 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ date
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ df -T -h
+Файл.система   Тип      Размер Использовано  Дост Использовано% Cмонтировано в
+tmpfs          tmpfs      1,6G         2,6M  1,6G            1% /run
+/dev/nvme0n1p6 ext4        92G          27G   60G           32% /
+tmpfs          tmpfs      7,7G          67M  7,7G            1% /dev/shm
+tmpfs          tmpfs      5,0M          12K  5,0M            1% /run/lock
+efivarfs       efivarfs   192K         120K   68K           64% /sys/firmware/efi/efivars
+/dev/nvme0n1p1 vfat       256M          59M  198M           23% /boot/efi
+tmpfs          tmpfs      1,6G         164K  1,6G            1% /run/user/1000
+
+[Сб 01 мар 2025 12:48:20 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/nvme0n1p6 during installation
+UUID=227a3a9c-65eb-4f2b-b0f3-806de1a2bd2a /               ext4    errors=remount-ro 0       1
+# /boot/efi was on /dev/nvme0n1p1 during installation
+UUID=E004-1F0A  /boot/efi       vfat    umask=0077      0       1
+/swapfile                                 none            swap    sw              0       0
+Пункт_11.1:
+### df -T -h - вывод типа файловой системы
+### 'Файл.система' - название файловой системы или устройства
+### 'Тип' - tmpfs, ext4, vfst...
+### 'Размер раздела' - общий размер раздела
+### 'Использовано' - занятое место
+### 'Смонтировано в' - путь, по которому можно попасть в ФС
+
+###  /etc/fstab - настройки монтирования: <file system> <mount point>   <type>  <options>       <dump>  <pass>
+
+### lsblk -f - выводит список устройств и их характеристики
+
+Пункт_12:
+### file читает магические числа и определяет характеристики файла
+[Вс 09 мар 2025 13:55:00 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file del2.png
+del2.png: PNG image data, 3469 x 1349, 8-bit/color RGBA, non-interlaced
+[Вс 09 мар 2025 13:55:06 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file test_program_9.c
+test_program_9.c: C source, Unicode text, UTF-8 text
+[Вс 09 мар 2025 13:55:13 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file link
+link: symbolic link to main.c
+[Вс 09 мар 2025 13:55:23 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file test_catalog
+test_catalog: setgid, directory
+[Вс 09 мар 2025 13:55:34 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file script.sh
+script.sh: Bourne-Again shell script, Unicode text, UTF-8 text executable
+[Вс 09 мар 2025 13:56:08 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file t_p
+t_p: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=463fb99a9ad1cb9f672fcb62afafb4e5ff6c2c98, for GNU/Linux 3.2.0, not stripped
+[Вс 09 мар 2025 13:56:13 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file -m script.sh
+script.sh, 2: Warning: offset `if [ -z "$1" ]; then' invalid
+script.sh, 3: Warning: offset ` echo "Использование: $0"' invalid
+script.sh, 4: Warning: offset ` exit 1' invalid
+script.sh, 5: Warning: offset `fi' invalid
+script.sh, 6: Warning: offset `OUTPUT_FILE="$1"' invalid
+script.sh, 7: Warning: offset `ls -lR / 2>/dev/null | awk '{print $1, $9, $NF}' | grep -E "^-|^b|^c|^d|^l|^p|^s" > all_files.txt' invalid
+script.sh, 8: Warning: offset `"$OUTPUT_FILE"' invalid
+script.sh, 9: Warning: offset `grep "^-" all_files.txt | head -n 1 >> "$OUTPUT_FILE"' invalid
+script.sh, 10: Warning: offset `grep "^b" all_files.txt | head -n 1 >> "$OUTPUT_FILE"' invalid
+script.sh, 11: Warning: offset `grep "^c" all_files.txt | head -n 1 >> "$OUTPUT_FILE"' invalid
+script.sh, 12: Warning: offset `grep "^d" all_files.txt | head -n 1 >> "$OUTPUT_FILE"' invalid
+script.sh, 13: Warning: offset `grep "^p" all_files.txt | head -n 1 >> "$OUTPUT_FILE"' invalid
+script.sh, 14: Warning: offset `grep "^l" all_files.txt | head -n 1 >> "$OUTPUT_FILE"' invalid
+script.sh, 15: Warning: offset `grep "^s" all_files.txt | head -n 1 >> "$OUTPUT_FILE"' invalid
+script.sh, 16: Warning: offset `echo "Результаты сохранены в $OUTPUT_FILE"' invalid
+file: could not find any valid magic files! (No such file or directory)
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file -b del2.png
+PNG image data, 3469 x 1349, 8-bit/color RGBA, non-interlaced
+[Вс 09 мар 2025 13:57:03 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file -c del2.png
+cont    offset  type    opcode  mask    value   desc
+[Вс 09 мар 2025 13:57:24 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file -e del2.png
+Usage: file [-bcCdEhikLlNnprsSvzZ0] [--apple] [--extension] [--mime-encoding]
+            [--mime-type] [-e <testname>] [-F <separator>]  [-f <namefile>]
+            [-m <magicfiles>] [-P <parameter=value>] [--exclude-quiet]
+            <file> ...
+       file -C [-m <magicfiles>]
+       file [--help]
+[Вс 09 мар 2025 13:57:28 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file -i script.sh
+script.sh: text/x-shellscript; charset=utf-8
+[Вс 09 мар 2025 13:57:41 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file -i del2.png
+del2.png: image/png; charset=binary
+### file -d script.sh - вывел массив отладочных данных
+
+Пункт_12.3:
+
+[Вс 09 мар 2025 13:58:21 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ vim /etc/magic
+[Вс 09 мар 2025 13:58:28 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ sudo vim /etc/magic
+[sudo] пароль для alexander: 
+[Вс 09 мар 2025 13:58:39 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ cat /etc/magic
+# Magic local data for file(1) command.
+# Insert here your local magic data. Format is described in magic(5).
+0 string \xDE\xAD\xBE\xEF UserSvininaFile
+[Вс 09 мар 2025 13:59:48 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ echo -ne '\xDE\xAD\xBE\xEFUserSvininaFile' > file.svinina
+[Вс 09 мар 2025 13:59:59 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ file file.svinina
+file.svinina: UserSvininaFile
+[Вс 09 мар 2025 13:60:23 MSK]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/Project_Bot/os_lb1$ 

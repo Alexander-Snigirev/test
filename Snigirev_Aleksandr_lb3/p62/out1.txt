@@ -1,0 +1,9 @@
+FIFO Analysis:
+  Path: /tmp/myfifo
+  Type: FIFO
+  Permissions: 664
+  Size: 0 bytes
+  Inode: 1179684
+  UID: 1000, GID: 1000
+  Last modified: Sat Apr 19 22:29:09 2025
+  Content: Read 256 bytes: 'Message 5 from writer'

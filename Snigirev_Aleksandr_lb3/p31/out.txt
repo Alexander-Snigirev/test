@@ -1,0 +1,30 @@
+Main process PID=18981, Main TID=18981
+Creating threads...
+Thread 1 started, TID=18982
+Thread 1, TID=18982: iteration 0
+Thread 2 started, TID=18983
+Thread 2, TID=18983: iteration 0
+Main: sending SIGUSR1 to thread 1
+SIGUSR1 handler started for TID=18982
+Signal 10 (SIGUSR1) received by TID=18982
+Thread 2, TID=18983: iteration 1
+SIGUSR1 handler finished for TID=18982
+Thread 1, TID=18982: iteration 1
+Main: sending SIGUSR2 to thread 1
+Main: sending SIGUSR2 to thread 2
+SIGUSR2 handler started for TID=18982
+Signal 12 (SIGUSR2) received by TID=18982
+SIGUSR2 handler started for TID=18983
+Signal 12 (SIGUSR2) received by TID=18983
+SIGUSR2 handler finished for TID=18982
+Thread 1, TID=18982: iteration 2
+SIGUSR2 handler finished for TID=18983
+Thread 2, TID=18983: iteration 2
+Main: sending SIGTERM to thread 2
+SIGTERM handler started for TID=18983
+Signal 15 (SIGTERM) received by TID=18983, terminating thread
+Thread 1, TID=18982: iteration 3
+Thread 1, TID=18982: iteration 4
+Thread 1, TID=18982 completed
+All threads completed.
+Main process exiting normally.

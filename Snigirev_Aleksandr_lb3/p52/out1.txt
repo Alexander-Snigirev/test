@@ -1,0 +1,11 @@
+Reader: read message: Message 1
+Reader: read message: Message 2
+Reader: read message: Message 3
+Reader: read message: Message 4
+Reader: read message: Message 5
+Writer: wrote message: Message 1
+Writer: wrote message: Message 2
+Writer: wrote message: Message 3
+Writer: wrote message: Message 4
+Writer: wrote message: Message 5
+Main: Processes completed

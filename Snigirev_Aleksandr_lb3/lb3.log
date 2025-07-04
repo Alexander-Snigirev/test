@@ -1,0 +1,602 @@
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p11$ lscpu
+Архитектура:              x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          39 bits physical, 48 bits virtual
+  Порядок байт:           Little Endian
+CPU(s):                   16
+  On-line CPU(s) list:    0-15
+ID прроизводителя:        GenuineIntel
+  Имя модели:             11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+    Семейство ЦПУ:        6
+    Модель:               141
+    Потоков на ядро:      2
+    Ядер на сокет:        8
+    Сокетов:              1
+    Степпинг:             1
+    CPU(s) scaling MHz:   24%
+    CPU max MHz:          4600,0000
+    CPU min MHz:          800,0000
+    BogoMIPS:             4608,00
+    Флаги:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall n
+                          x pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pn
+                          i pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_t
+                          imer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l2 cdp_l2 ssbd ibrs ibpb stibp ibrs_enhanced tpr_sha
+                          dow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdt_a avx512f avx512dq rdseed adx smap avx5
+                          12ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves split_lock_detect user_shstk dth
+                          erm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpcl
+                          mulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid movdiri movdir64b fsrm avx512_vp2intersect md_clear ibt flush_l1d arch_ca
+                          pabilities
+Virtualization features:  
+  Виртуализация:          VT-x
+Caches (sum of all):      
+  L1d:                    384 KiB (8 instances)
+  L1i:                    256 KiB (8 instances)
+  L2:                     10 MiB (8 instances)
+  L3:                     24 MiB (1 instance)
+NUMA:                     
+  NUMA node(s):           1
+  NUMA node0 CPU(s):      0-15
+Vulnerabilities:          
+  Gather data sampling:   Mitigation; Microcode
+  Itlb multihit:          Not affected
+  L1tf:                   Not affected
+  Mds:                    Not affected
+  Meltdown:               Not affected
+  Mmio stale data:        Not affected
+  Reg file data sampling: Not affected
+  Retbleed:               Not affected
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; RSB filling; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop
+  Srbds:                  Not affected
+  Tsx async abort:        Not affected
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p11$ date
+Сб 19 апр 2025 12:03:43 MSK
+Пункт 1_1:
+1.1. Создайте программу с порождением двух нитей так, чтобы управление второй нитью 
+    осуществлялось посредством сигнала SIGUSR1 из первой нити
+    (после некоторого заданного интервала времени выполнения обеих нитей удалите вторую 
+    нить отправкой сигнала из первой нити).
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p11$ gcc -o p11 p11.c
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p11$ taskset -c 0 ./p11 > out.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p11$ cat out.txt
+Main process PID=15595, Main TID=15595
+Creating threads...
+Thread 1 started, TID=15596
+Thread 1, TID=15596: iteration 0
+Thread 2 started, TID=15597
+Thread 2, TID=15597: iteration 0
+Thread 1, TID=15596: iteration 1
+Thread 2, TID=15597: iteration 1
+Timer expired, sending SIGUSR1 to second thread
+Signal 10 (SIGUSR1) received by TID=15597
+Thread 2, TID=15597: iteration 2
+Thread 1, TID=15596: iteration 2
+Thread 2, TID=15597: iteration 3
+Thread 1, TID=15596: iteration 3
+Thread 2, TID=15597: iteration 4
+Thread 1, TID=15596: iteration 4
+Thread 2, TID=15597 completed
+Thread 1, TID=15596 completed
+All threads completed.
+Main process exiting normally.
+### Как видно, потоки сначала выполняются параллельно. Через 5 секунд первая нить посылает сигнал второй нити.
+Пункт 1_2:
+1.2. Дополните программу, создав собственный обработчик сигнала,
+содержащий уведомление о начале его работы и возврат посредством функции pthread_exit(NULL);
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ mkdir p12 && cp p11/p11.c p12/p12.c 
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ cd p12
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p12$ gcc -o p12 p12.c
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p12$ taskset -c 0 ./p12 > out.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p12$ cat out.txt
+Main process PID=16128, Main TID=16128
+Creating threads...
+Thread 1 started, TID=16129
+Thread 1, TID=16129: iteration 0
+Thread 2 started, TID=16130
+Thread 2, TID=16130: iteration 0
+Thread 2, TID=16130: iteration 1
+Thread 1, TID=16129: iteration 1
+Timer expired, sending SIGUSR1 to second thread
+Signal 10 (SIGUSR1) received by TID=16130, thread 2 is finishing... 
+Thread 1, TID=16129: iteration 2
+Thread 1, TID=16129: iteration 3
+Thread 1, TID=16129: iteration 4
+Thread 1, TID=16129 completed
+All threads completed.
+Main process exiting normally.
+### Теперь вторая нить не просто получает сигнал, а реагирует на него завершением. Далее первая нить работает в одиночку
+
+Пункт 3_1:
+3.1. Используя функцию sigaction(), продемонстрируйте возможности управления линейкой сигналов,
+включая собственные обработчики и маскирование для разных сигналов,
+а также вариативность, предоставляемую структурами sigaction (act / oldact).
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p31$ gcc -o p31 p31.c
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p31$ taskset -c 0 ./p31 > out.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p31$ cat out.txt
+Main process PID=18821, Main TID=18821
+Creating threads...
+Thread 1 started, TID=18822
+Thread 1, TID=18822: iteration 0
+Thread 2 started, TID=18823
+Thread 2, TID=18823: iteration 0
+Main: sending SIGUSR1 to thread 1
+SIGUSR1 handler started for TID=18822
+Signal 10 (SIGUSR1) received by TID=18822
+Thread 2, TID=18823: iteration 1
+SIGUSR1 handler finished for TID=18822
+Thread 1, TID=18822: iteration 1
+Main: sending SIGUSR2 to thread 1
+Main: sending SIGUSR2 to thread 2
+SIGUSR2 handler started for TID=18822
+Signal 12 (SIGUSR2) received by TID=18822
+SIGUSR2 handler started for TID=18823
+Signal 12 (SIGUSR2) received by TID=18823
+SIGUSR2 handler finished for TID=18822
+Thread 1, TID=18822: iteration 2
+SIGUSR2 handler finished for TID=18823
+Thread 2, TID=18823: iteration 2
+Main: sending SIGTERM to thread 2
+SIGTERM handler started for TID=18823
+Signal 15 (SIGTERM) received by TID=18823, terminating thread
+Thread 1, TID=18822: iteration 3
+Thread 1, TID=18822: iteration 4
+Thread 1, TID=18822 completed
+All threads completed.
+Main process exiting normally.
+### Создается два потока. t1 получает sigusr1, который маскирует sigusr2. sigusr2 выполняется строк после sigusr1. Для t2 все наоборот.
+### SA_RESTART для SIGUSR2 позволяет циклу продолжаться без прерывания sleep.
+### Первая нить завершается после завершения всех итераций, а вторая после SIGTERM
+### Пункт 5_1:
+Обеспечьте разделение памяти и необходимую синхронизацию между независимыми процессами так, чтобы один из процессов
+мог записывать информацию, а другой считывать, по мере готовности и без потери данных для обоих процессов.
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p51$ touch p51.c
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p51$ gcc -o shm p51.c -pthread -lrt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p51$ taskset -c 0 ./shm > out.txt
+caalexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p51$ cat out.txt
+Writer: Wrote 'Message 1 from writer' at index 0
+Reader: Read 'Message 1 from writer' from index 0
+Writer: Wrote 'Message 2 from writer' at index 1
+Reader: Read 'Message 2 from writer' from index 1
+Writer: Wrote 'Message 3 from writer' at index 2
+Reader: Read 'Message 3 from writer' from index 2
+Writer: Wrote 'Message 4 from writer' at index 3
+Writer: Wrote 'Message 5 from writer' at index 4
+Reader: Read 'Message 4 from writer' from index 3
+Writer: Wrote 'Message 6 from writer' at index 5
+Reader: Read 'Message 5 from writer' from index 4
+Writer: Wrote 'Message 7 from writer' at index 6
+Writer: Wrote 'Message 8 from writer' at index 7
+Reader: Read 'Message 6 from writer' from index 5
+Writer: Wrote 'Message 9 from writer' at index 8
+Reader: Read 'Message 7 from writer' from index 6
+Writer: Wrote 'Message 10 from writer' at index 9
+Writer: Wrote 'Message 11 from writer' at index 0
+Reader: Read 'Message 8 from writer' from index 7
+Writer: Wrote 'Message 12 from writer' at index 1
+Reader: Read 'Message 9 from writer' from index 8
+Writer: Wrote 'Message 13 from writer' at index 2
+Writer: Wrote 'Message 14 from writer' at index 3
+Reader: Read 'Message 10 from writer' from index 9
+Writer: Wrote 'Message 15 from writer' at index 4
+Reader: Read 'Message 11 from writer' from index 0
+Writer: Wrote 'Message 16 from writer' at index 5
+Writer: Wrote 'Message 17 from writer' at index 6
+Reader: Read 'Message 12 from writer' from index 1
+Writer: Wrote 'Message 18 from writer' at index 7
+Reader: Read 'Message 13 from writer' from index 2
+Writer: Wrote 'Message 19 from writer' at index 8
+Writer: Wrote 'Message 20 from writer' at index 9
+Reader: Read 'Message 14 from writer' from index 3
+Reader: Read 'Message 15 from writer' from index 4
+Reader: Read 'Message 16 from writer' from index 5
+Reader: Read 'Message 17 from writer' from index 6
+Reader: Read 'Message 18 from writer' from index 7
+Reader: Read 'Message 19 from writer' from index 8
+Reader: Read 'Message 20 from writer' from index 9
+Main process exiting.
+### Разделяемость памяти работает нормально, читатель считывает в порядке очереди.
+Пункт 5_2:
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p52$ gcc -o shm p52.c -pthread -lrt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p52$ taskset -c 0 ./shm > out1.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p52$ cat out1.txt
+Reader: read message: Message 1
+Reader: read message: Message 2
+Reader: read message: Message 3
+Reader: read message: Message 4
+Reader: read message: Message 5
+Writer: wrote message: Message 1
+Writer: wrote message: Message 2
+Writer: wrote message: Message 3
+Writer: wrote message: Message 4
+Writer: wrote message: Message 5
+Main: Processes completed
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p52$ gcc -o shm1 p521.c -pthread -lrt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p52$ taskset -c 0 ./shm1 > out2.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p52$ cat out2.txt
+Reader: read message: Message 1
+Reader: read message: Message 2
+Reader: read message: Message 3
+Reader: read message: Message 4
+Reader: read message: Message 5
+Writer: Wrote message: Message 1
+Writer: Wrote message: Message 2
+Writer: Wrote message: Message 3
+Writer: Wrote message: Message 4
+Writer: Wrote message: Message 5
+Main: Processes completed
+### Продемонстрированы еще два способа синхронизации: условные переменные и flock
+### Сообщения переданы без потерь, возможно есть различия в быстродействии, но они несущественны
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p52$ date
+Сб 19 апр 2025 17:08:45 MSK
+Пункт 5_3:
+//Изменится ли ситуация, если процессы заменить на потоки одного процесса. Приведите эксперимент.
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p52$ cd ../p53
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p53$ gcc -o shm p53.c -pthread -lrt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p53$ ./shm > out.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p53$ cat out.txt
+Writer: wrote message: Message 1
+Reader: read message: Message 1
+Writer: wrote message: Message 2
+Reader: read message: Message 2
+Writer: wrote message: Message 3
+Reader: read message: Message 3
+Writer: wrote message: Message 4
+Reader: read message: Message 4
+Writer: wrote message: Message 5
+Reader: read message: Message 5
+Main: processes completed
+### Нити одного процесса также работают стабильно и правильно. Ничего не изменилось
+Пункт 6_1:
+6.1. Каналы pipe. Приведите примеры использования в командной строке.
+Приведите накладываемые ограничения на этот вид IPC,
+включая фрагменты системных (конфигурационных) файлов.
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ ls -lR | grep '.c'
+-rw-rw-r-- 1 alexander alexander  4204 апр 19 12:13 p11.c
+-rw-rw-r-- 1 alexander alexander  4026 апр 19 12:19 p12.c
+-rw-rw-r-- 1 alexander alexander  4632 апр 19 12:55 p31.c
+-rw-rw-r-- 1 alexander alexander  5826 апр 19 14:03 p51.c
+-rw-rw-r-- 1 alexander alexander  3411 апр 19 17:03 p521.c
+-rw-rw-r-- 1 alexander alexander  3320 апр 19 17:07 p52.c
+-rw-rw-r-- 1 alexander alexander  2791 апр 19 20:43 p53.c
+### Канал | передает вывод ls в утилиту grep, которая фильтрует строки
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ ps aux | sort -nk 3 | head -n 5
+alexand+   10450  0.0  0.7 1216479748 119108 ?   Sl   10:10   0:39 /snap/code/187/usr/share/code/code --type=renderer --crashpad-handler-pid=6385 --enable-crash-reporter=55aaec49-10bc-4d0b-85c9-c0f54d66b593,no_channel --user-data-dir=/home/alexander/.config/Code --standard-schemes=vscode-webview,vscode-file --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --app-path=/snap/code/187/usr/share/code/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --no-sandbox --disable-gpu-compositing --disable-blink-features=FontMatchingCTMigration,StandardizedBrowserZoom, --lang=ru --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=22 --time-ticks-at-unix-epoch=-1745042723929876 --launch-time-ticks=3923356448 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,261272510847098476,12636025068667837339,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version --vscode-window-config=vscode:a5867815-6809-4b88-98b8-ea31fada8710
+alexand+   10461  0.4  0.9 1216489780 151888 ?   Sl   10:10   3:17 /snap/code/187/usr/share/code/code --type=renderer --crashpad-handler-pid=6385 --enable-crash-reporter=55aaec49-10bc-4d0b-85c9-c0f54d66b593,no_channel --user-data-dir=/home/alexander/.config/Code --standard-schemes=vscode-webview,vscode-file --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --app-path=/snap/code/187/usr/share/code/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --no-sandbox --disable-gpu-compositing --disable-blink-features=FontMatchingCTMigration,StandardizedBrowserZoom, --lang=ru --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=23 --time-ticks-at-unix-epoch=-1745042723929876 --launch-time-ticks=3923441567 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,261272510847098476,12636025068667837339,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version --vscode-window-config=vscode:a5867815-6809-4b88-98b8-ea31fada8710
+alexand+   10477  0.0  0.7 1218149724 122588 ?   Sl   10:10   0:14 /snap/code/187/usr/share/code/code --type=renderer --crashpad-handler-pid=6385 --enable-crash-reporter=55aaec49-10bc-4d0b-85c9-c0f54d66b593,no_channel --user-data-dir=/home/alexander/.config/Code --standard-schemes=vscode-webview,vscode-file --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --app-path=/snap/code/187/usr/share/code/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --no-sandbox --disable-gpu-compositing --disable-blink-features=FontMatchingCTMigration,StandardizedBrowserZoom, --lang=ru --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=24 --time-ticks-at-unix-epoch=-1745042723929876 --launch-time-ticks=3924750391 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,261272510847098476,12636025068667837339,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version --vscode-window-config=vscode:a5867815-6809-4b88-98b8-ea31fada8710
+alexand+   10487  0.0  0.5 1216437400 82568 ?    Sl   10:10   0:01 /snap/code/187/usr/share/code/code --type=renderer --crashpad-handler-pid=6385 --enable-crash-reporter=55aaec49-10bc-4d0b-85c9-c0f54d66b593,no_channel --user-data-dir=/home/alexander/.config/Code --standard-schemes=vscode-webview,vscode-file --secure-schemes=vscode-webview,vscode-file --cors-schemes=vscode-webview,vscode-file --fetch-schemes=vscode-webview,vscode-file --service-worker-schemes=vscode-webview --code-cache-schemes=vscode-webview,vscode-file --app-path=/snap/code/187/usr/share/code/resources/app --enable-sandbox --enable-blink-features=HighlightAPI --no-sandbox --disable-gpu-compositing --disable-blink-features=FontMatchingCTMigration,StandardizedBrowserZoom, --lang=ru --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=25 --time-ticks-at-unix-epoch=-1745042723929876 --launch-time-ticks=3925229144 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,261272510847098476,12636025068667837339,262144 --disable-features=CalculateNativeWinOcclusion,PlzDedicatedWorker,SpareRendererForSitePerProcess --variations-seed-version --vscode-window-config=vscode:a5867815-6809-4b88-98b8-ea31fada8710
+alexand+   10692  0.0  0.0   9712  6760 pts/1    Ss   10:13   0:00 /usr/bin/bash --init-file /snap/code/187/usr/share/code/resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-bash.sh
+### ps aux выводит список, sort сортирует, а head задает количество
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ cat */*.c | sort | uniq > res.txt
+### Канал | позволил объединить файлы, отсортировать их содержимое и перенаправить вывод
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ mkfifo mypipe
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ echo "Здраааасте" > mypipe
+^C
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ echo "Здраааасте" > mypipe &
+[1] 50191
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ cat < mypipe
+Здраааасте
+[1]+  Завершён        echo "Здраааасте" > mypipe
+### Пример именованных fifo каналов. 
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ cat /proc/sys/fs/pipe-max-size
+1048576
+### Максимальный размер буфера канала
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ sudo echo 2097152 > /proc/sys/fs/pipe-max-size
+bash: /proc/sys/fs/pipe-max-size: Отказано в доступе
+### Изменить это значение не представляется возможным
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ cat /proc/sys/fs/pipe-user-pages-soft
+16384
+### Максимальное количество каналов
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ ulimit -n
+1048576
+### Информацию можно получать с помощью утилиты ulimit
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p61$ gcc -o exe p61.c
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p61$ ./exe > out.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p61$ cat out.txt
+Writer: Sending 'Message 1 from writer'
+Reader: Received 'Message 1 from writer'
+Writer: Sending 'Message 2 from writer'
+Reader: Received 'Message 2 from writer'
+Writer: Sending 'Message 3 from writer'
+Reader: Received 'Message 3 from writer'
+Writer: Sending 'Message 4 from writer'
+Reader: Received 'Message 4 from writer'
+Writer: Sending 'Message 5 from writer'
+Reader: Received 'Message 5 from writer'
+Writer: Sending 'Message 6 from writer'
+Reader: Received 'Message 6 from writer'
+Writer: Sending 'Message 7 from writer'
+Reader: Received 'Message 7 from writer'
+Writer: Sending 'Message 8 from writer'
+Reader: Received 'Message 8 from writer'
+Writer: Sending 'Message 9 from writer'
+Reader: Received 'Message 9 from writer'
+Writer: Sending 'Message 10 from writer'
+Reader: Received 'Message 10 from writer'
+Writer: Sending 'Message 11 from writer'
+Reader: Received 'Message 11 from writer'
+Writer: Sending 'Message 12 from writer'
+Reader: Received 'Message 12 from writer'
+Writer: Sending 'Message 13 from writer'
+Reader: Received 'Message 13 from writer'
+Writer: Sending 'Message 14 from writer'
+Reader: Received 'Message 14 from writer'
+Writer: Sending 'Message 15 from writer'
+Reader: Received 'Message 15 from writer'
+Writer: Sending 'Message 16 from writer'
+Reader: Received 'Message 16 from writer'
+Writer: Sending 'Message 17 from writer'
+Reader: Received 'Message 17 from writer'
+Writer: Sending 'Message 18 from writer'
+Reader: Received 'Message 18 from writer'
+Writer: Sending 'Message 19 from writer'
+Reader: Received 'Message 19 from writer'
+Writer: Sending 'Message 20 from writer'
+Reader: Received 'Message 20 from writer'
+Reader: End of pipe reached, read 20 messages
+Main process exiting.
+### Демонстрируется передача сообщений между процессами с учетом ограничений
+### Здесь процессы имеют общий буфер и получают доступ к нему по элементам массива двух элементов
+Пункт 6_2:
+Каналы fifo. Реализуйте: из командной строки и создав программу с соответствующими системными функциями.
+Приведите характеристику порождаемого FIFO-файла и его содержимого,
+используя: утилиты ОС, /proc и программно.
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ mkdir p62
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3$ cd p62
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$ gcc -o exe p62.c
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$ ./exe > out.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$ cat out.txt
+Writer: Sending 'Message 1 from writer'
+Reader: Received 'Message 1 from writer'
+Writer: Sending 'Message 2 from writer'
+Reader: Received 'Message 2 from writer'
+Writer: Sending 'Message 3 from writer'
+Writer: Sending 'Message 4 from writer'
+Reader: Received 'Message 3 from writer'
+Writer: Sending 'Message 5 from writer'
+Reader: Received 'Message 4 from writer'
+Writer: Sending 'Message 6 from writer'
+Writer: Sending 'Message 7 from writer'
+Reader: Received 'Message 5 from writer'
+Writer: Sending 'Message 8 from writer'
+Reader: Received 'Message 6 from writer'
+Writer: Sending 'Message 9 from writer'
+Reader: Received 'Message 7 from writer'
+Writer: Sending 'Message 10 from writer'
+Writer: Sending 'Message 11 from writer'
+Reader: Received 'Message 8 from writer'
+Writer: Sending 'Message 12 from writer'
+Reader: Received 'Message 9 from writer'
+Writer: Sending 'Message 13 from writer'
+Writer: Sending 'Message 14 from writer'
+Reader: Received 'Message 10 from writer'
+Writer: Sending 'Message 15 from writer'
+Reader: Received 'Message 11 from writer'
+Writer: Sending 'Message 16 from writer'
+Writer: Sending 'Message 17 from writer'
+Reader: Received 'Message 12 from writer'
+Writer: Sending 'Message 18 from writer'
+Reader: Received 'Message 13 from writer'
+Writer: Sending 'Message 19 from writer'
+Writer: Sending 'Message 20 from writer'
+Reader: Received 'Message 14 from writer'
+Reader: Received 'Message 15 from writer'
+Reader: Received 'Message 16 from writer'
+Reader: Received 'Message 17 from writer'
+Reader: Received 'Message 18 from writer'
+Reader: Received 'Message 19 from writer'
+Reader: Received 'Message 20 from writer'
+Reader: End of FIFO reached, read 20 messages
+Main process exiting.
+### Создает именованный канал по адресу /tmp/myfifo
+### Права доступа 0666 позволяют чтение и запись всем пользователям
+### Открытие fifo блокируется, пока обе стороны не подключатся
+### Писатель записывает и закрывает дескриптор. читатель считывает и спосле этого также закрывает дескриптор. После этого родитель удаляет FIFO.
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$ ./exe > out.txt &
+[1] 55950
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$ ./exe1 > out1.txt
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$ cat out1.txt
+[1]+  Завершён        ./exe > out.txt
+FIFO Analysis:
+  Path: /tmp/myfifo
+  Type: FIFO
+  Permissions: 664
+  Size: 0 bytes
+  Inode: 1179684
+  UID: 1000, GID: 1000
+  Last modified: Sat Apr 19 22:29:09 2025
+  Content: Read 256 bytes: 'Message 5 from writer'
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$  
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$ ./exe > out.txt &
+[1] 56253
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p62$ ls -l /proc/56253/fd
+итого 0
+lrwx------ 1 alexander alexander 64 апр 19 22:31 0 -> /dev/pts/1
+l-wx------ 1 alexander alexander 64 апр 19 22:31 1 -> '/home/alexander/Рабочий стол/os_lb3/p62/out.txt'
+lr-x------ 1 alexander alexander 64 апр 19 22:31 103 -> /snap/code/187/usr/share/code/v8_context_snapshot.bin
+lrwx------ 1 alexander alexander 64 апр 19 22:31 2 -> /dev/pts/1
+l-wx------ 1 alexander alexander 64 апр 19 22:31 37 -> /home/alexander/.config/Code/logs/20250419T093512/ptyhost.log
+lrwx------ 1 alexander alexander 64 апр 19 22:31 38 -> /dev/ptmx
+lrwx------ 1 alexander alexander 64 апр 19 22:31 39 -> 'socket:[104253]'
+### Чтение информации из файла процесса
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p63$ gcc -o exe p63.c
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p63$ ./exe > out.txt &
+[1] 57534
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p63$ cat out.txt
+[1]+  Завершён        ./exe > out.txt
+Sender: Sending 'Message 1 from sender'
+Receiver: Received 'Message 1 from sender'
+Sender: Sending 'Message 2 from sender'
+Receiver: Received 'Message 2 from sender'
+Sender: Sending 'Message 3 from sender'
+Receiver: Received 'Message 3 from sender'
+Sender: Sending 'Message 4 from sender'
+Sender: Sending 'Message 5 from sender'
+Receiver: Received 'Message 4 from sender'
+Sender: Sending 'Message 6 from sender'
+Receiver: Received 'Message 5 from sender'
+Sender: Sending 'Message 7 from sender'
+Sender: Sending 'Message 8 from sender'
+Receiver: Received 'Message 6 from sender'
+Sender: Sending 'Message 9 from sender'
+Receiver: Received 'Message 7 from sender'
+Sender: Sending 'Message 10 from sender'
+Sender: Sending 'Message 11 from sender'
+Receiver: Received 'Message 8 from sender'
+Sender: Sending 'Message 12 from sender'
+Receiver: Received 'Message 9 from sender'
+Sender: Sending 'Message 13 from sender'
+Sender: Sending 'Message 14 from sender'
+Receiver: Received 'Message 10 from sender'
+Sender: Sending 'Message 15 from sender'
+Receiver: Received 'Message 11 from sender'
+Sender: Sending 'Message 16 from sender'
+Sender: Sending 'Message 17 from sender'
+Receiver: Received 'Message 12 from sender'
+Sender: Sending 'Message 18 from sender'
+Receiver: Received 'Message 13 from sender'
+Sender: Sending 'Message 19 from sender'
+Sender: Sending 'Message 20 from sender'
+Receiver: Received 'Message 14 from sender'
+Receiver: Received 'Message 15 from sender'
+Receiver: Received 'Message 16 from sender'
+Receiver: Received 'Message 17 from sender'
+Receiver: Received 'Message 18 from sender'
+Receiver: Received 'Message 19 from sender'
+Receiver: Received 'Message 20 from sender'
+Receiver: End of queue reached, read 20 messages
+Main process exiting.
+### Демонстрация отправки и приема очереди из 20 сообщений
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p63$ cat /proc/sys/fs/mqueue/msg_max
+10
+### Задает максимальное количество сообщений в одной очереди
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p63$ cat /proc/sys/fs/mqueue/msgsize_max
+8192
+### Максимальный размер одного сообщения
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p63$ cat /proc/sys/fs/mqueue/queues_max
+256
+### Ограничивает общее количество очередей в системе
+[Cб 19 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p63$ ls -l /dev/mqueue
+итого 0
+-rw-rw-r-- 1 alexander alexander 80 апр 19 23:04 my_mq
+### Информация об очереди из файла /dev/mqueue
+Пункт 7_1:
+/*7.1. Выполните передачу информации локально посредством сокетов по TCP/IP*/
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ ./exe1 > out.txt
+cat out.alexander
+[Вс 20 апр 2025]@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cat out.txt
+Client: Sending 'Message 1 from client'
+Server: Received 'Message 1 from client'
+Client: Sending 'Message 2 from client'
+Server: Received 'Message 2 from client'
+Client: Sending 'Message 3 from client'
+Server: Received 'Message 3 from client'
+Client: Sending 'Message 4 from client'
+Client: Sending 'Message 5 from client'
+Server: Received 'Message 4 from client'
+Client: Sending 'Message 6 from client'
+Server: Received 'Message 5 from client'
+Client: Sending 'Message 7 from client'
+Client: Sending 'Message 8 from client'
+Server: Received 'Message 6 from client'
+Client: Sending 'Message 9 from client'
+Server: Received 'Message 7 from client'
+Client: Sending 'Message 10 from client'
+Client: Sending 'Message 11 from client'
+Server: Received 'Message 8 from client'
+Client: Sending 'Message 12 from client'
+Server: Received 'Message 9 from client'
+Client: Sending 'Message 13 from client'
+Client: Sending 'Message 14 from client'
+Server: Received 'Message 10 from client'
+Client: Sending 'Message 15 from client'
+Server: Received 'Message 11 from client'
+Client: Sending 'Message 16 from client'
+Client: Sending 'Message 17 from client'
+Server: Received 'Message 12 from client'
+Client: Sending 'Message 18 from client'
+Server: Received 'Message 13 from client'
+Client: Sending 'Message 19 from client'
+Client: Sending 'Message 20 from client'
+Server: Received 'Message 14 from client'
+Server: Received 'Message 15 from client'
+Server: Received 'Message 16 from client'
+Server: Received 'Message 17 from client'
+Server: Received 'Message 18 from client'
+Server: Received 'Message 19 from client'
+Server: Received 'Message 20 from client'
+Server: End of connection, read 20 messages
+Main process exiting
+### Переданы 20 сообщений в локальной сети через TCP-сокеты
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cat /proc/sys/fs/file-max
+9223372036854775807
+### Максимум открытых файлов в системе
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cat /proc/sys/net/ipv4/tcp_rmem
+4096    131072  6291456
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cat /proc/sys/net/ipv4/tcp_wmem
+4096    16384   4194304
+### Размер приемного и отправного буферов
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cat /proc/sys/net/core/somaxconn
+4096
+### Максимальное количество соединений
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cat /proc/sys/net/ipv4/ip_local_port_range
+32768   60999
+### Диапазон портов для TCP/IP
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cat /proc/sys/net/ipv4/tcp_max_syn_backlog
+1024
+### Ограничение на сетевые ресурсы
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cat /proc/sys/net/core/netdev_max_backlog
+1000
+### Ограничение соединений на уровне системы
+Пункт 7_2:
+7.2. Выполните аналогичное взаимодействие на основе UDP
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p71$ cd ../p72
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p72$ gcc p72.c -o exe1
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p72$ ./exe1 > out.txt
+[Вс 20 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb3/p72$ cat out.txt
+Sender: Sending 'Message 1 from sender'
+Receiver: Received 'Message 1 from sender'
+Sender: Sending 'Message 2 from sender'
+Receiver: Received 'Message 2 from sender'
+Sender: Sending 'Message 3 from sender'
+Sender: Sending 'Message 4 from sender'
+Receiver: Received 'Message 3 from sender'
+Sender: Sending 'Message 5 from sender'
+Receiver: Received 'Message 4 from sender'
+Sender: Sending 'Message 6 from sender'
+Receiver: Received 'Message 5 from sender'
+Sender: Sending 'Message 7 from sender'
+Sender: Sending 'Message 8 from sender'
+Receiver: Received 'Message 6 from sender'
+Sender: Sending 'Message 9 from sender'
+Receiver: Received 'Message 7 from sender'
+Sender: Sending 'Message 10 from sender'
+Sender: Sending 'Message 11 from sender'
+Receiver: Received 'Message 8 from sender'
+Sender: Sending 'Message 12 from sender'
+Receiver: Received 'Message 9 from sender'
+Sender: Sending 'Message 13 from sender'
+Sender: Sending 'Message 14 from sender'
+Receiver: Received 'Message 10 from sender'
+Sender: Sending 'Message 15 from sender'
+Receiver: Received 'Message 11 from sender'
+Sender: Sending 'Message 16 from sender'
+Sender: Sending 'Message 17 from sender'
+Receiver: Received 'Message 12 from sender'
+Sender: Sending 'Message 18 from sender'
+Receiver: Received 'Message 13 from sender'
+Sender: Sending 'Message 19 from sender'
+Sender: Sending 'Message 20 from sender'
+Receiver: Received 'Message 14 from sender'
+Receiver: Received 'Message 15 from sender'
+Receiver: Received 'Message 16 from sender'
+Receiver: Received 'Message 17 from sender'
+Receiver: Received 'Message 18 from sender'
+Receiver: Received 'Message 19 from sender'
+Receiver: Received 'Message 20 from sender'
+Receiver: End of reception, read 20 messages
+Main process exiting.
+### В UDP доставка не гарантирована, но в локальной сети вероятность этого невелика
+### Ограничения расписаны в тех же файлах, что и TCP
+### В целом, передача данных по локальной сети реализована
