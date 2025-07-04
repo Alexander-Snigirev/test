@@ -1,0 +1,1152 @@
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ lscpu
+Архитектура:              x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          39 bits physical, 48 bits virtual
+  Порядок байт:           Little Endian
+CPU(s):                   16
+  On-line CPU(s) list:    0-15
+ID прроизводителя:        GenuineIntel
+  Имя модели:             11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+    Семейство ЦПУ:        6
+    Модель:               141
+    Потоков на ядро:      2
+    Ядер на сокет:        8
+    Сокетов:              1
+    Степпинг:             1
+    CPU(s) scaling MHz:   43%
+    CPU max MHz:          4600,0000
+    CPU min MHz:          800,0000
+    BogoMIPS:             4608,00
+    Флаги:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall n
+                          x pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pn
+                          i pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_t
+                          imer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l2 cdp_l2 ssbd ibrs ibpb stibp ibrs_enhanced tpr_sha
+                          dow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdt_a avx512f avx512dq rdseed adx smap avx5
+                          12ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves split_lock_detect user_shstk dth
+                          erm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpcl
+                          mulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid movdiri movdir64b fsrm avx512_vp2intersect md_clear ibt flush_l1d arch_ca
+                          pabilities
+Virtualization features:  
+  Виртуализация:          VT-x
+Caches (sum of all):      
+  L1d:                    384 KiB (8 instances)
+  L1i:                    256 KiB (8 instances)
+  L2:                     10 MiB (8 instances)
+  L3:                     24 MiB (1 instance)
+NUMA:                     
+  NUMA node(s):           1
+  NUMA node0 CPU(s):      0-15
+Vulnerabilities:          
+  Gather data sampling:   Mitigation; Microcode
+  Itlb multihit:          Not affected
+  L1tf:                   Not affected
+  Mds:                    Not affected
+  Meltdown:               Not affected
+  Mmio stale data:        Not affected
+  Reg file data sampling: Not affected
+  Retbleed:               Not affected
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:             Mitigation; Enhanced / Automatic IBRS; IBPB conditional; RSB filling; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop
+  Srbds:                  Not affected
+  Tsx async abort:        Not affected
+Пункт 1_1:
+1.1. Запустите в фоновом режиме несколько утилит
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./proc1 >> list.txt &
+[1] 23751
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./proc2 >> list.txt &
+[2] 23874
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./proc3 >> list.txt &
+[3] 23937
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ jobs
+[1]   Запущен          ./proc1 >> list.txt &
+[2]-  Запущен          ./proc2 >> list.txt &
+[3]+  Запущен          ./proc3 >> list.txt &
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ 
+### В фоне запущены 3 процесса
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ fg
+./proc3 >> list.txt
+^Z
+### Процесс proc3 возвращается в терминал и начинает работать в нем
+[3]+  Остановлен    ./proc3 >> list.txt
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ %3 &
+[3]+ ./proc3 >> list.txt &
+### Обратно в фон
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ fg %2
+./proc2 >> list.txt
+^Z
+[2]+  Остановлен    ./proc2 >> list.txt
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ jobs
+[1]   Запущен          ./proc1 >> list.txt &
+[2]+  Остановлен    ./proc2 >> list.txt
+[3]-  Запущен          ./proc3 >> list.txt &
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ %2 &
+[2]+ ./proc2 >> list.txt &
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ kill 4173
+[3]+  Завершено      ./proc3 >> list.txt
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ jobs -l
+[1]-  4165 Запущен          ./proc1 >> list.txt &
+[2]+  4170 Запущен          ./proc2 >> list.txt &
+### Использование kill
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./proc1 > list.txt &
+[1] 6151
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./proc2 > list.txt &
+[2] 6160
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./proc3 > list2.txt &
+[3] 6189
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ jobs
+[1]   Запущен          ./proc1 > list.txt &
+[2]-  Запущен          ./proc2 > list.txt &
+[3]+  Запущен          ./proc3 > list2.txt &
+Пункт 1_2:
+1.2.  Ознакомьтесь с командой nohup(1)
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ nohup sleep 120 &
+[4] 6233
+nohup: ввод игнорируется, вывод добавляется в 'nohup.out'
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ jobs
+[1]   Запущен          ./proc1 > list.txt &
+[2]   Запущен          ./proc2 > list.txt &
+[3]-  Запущен          ./proc3 > list2.txt &
+[4]+  Запущен          nohup sleep 120 &
+### Теперь выходим из сессии
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps aux | grep sleep
+alexand+    6233  0.0  0.0   6084  2432 ?        S    19:05   0:00 sleep 120
+alexand+    6444  0.0  0.0   6652  2304 pts/2    S+   19:06   0:00 grep --color=auto sleep
+### Как видно, процесс 6233 пережил закрытие терминала
+### nohup блокирует сигнал SIGHUP, завершающий обычные процессы сессии
+Пункт 1_3:
+1.3. Определите uid процесса, каково минимальное значение, и кому оно принадлежит. Каково минимальное и максимальное значение pid
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -eo pid,user,uid,cmd | grep " 0 " | head -10
+      1 root         0 /sbin/init splash
+      2 root         0 [kthreadd]
+      3 root         0 [pool_workqueue_release]
+      4 root         0 [kworker/R-rcu_g]
+      5 root         0 [kworker/R-rcu_p]
+      6 root         0 [kworker/R-slub_]
+      7 root         0 [kworker/R-netns]
+      9 root         0 [kworker/0:0H-events_highpri]
+     12 root         0 [kworker/R-mm_pe]
+     13 root         0 [rcu_tasks_kthread]
+### uid = 0 принадлежит root. Все его процессы будут иметь uid = 0
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -eo pid,user,uid,cmd | grep " 1000 " | head -3
+   2248 alexand+  1000 /usr/lib/systemd/systemd --user
+   2254 alexand+  1000 (sd-pam)
+   2265 alexand+  1000 /usr/bin/pipewire
+### uid>=1000 имеют процессы, запущенные от имени обычных пользователей
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -eo pid,user,uid,cmd --no-headers | awk '$3 > 0 && $3 < 1000' | head -3
+   1104 systemd+   108 /usr/lib/systemd/systemd-oomd
+   1106 systemd+   101 /usr/lib/systemd/systemd-resolved
+   1108 systemd+   103 /usr/lib/systemd/systemd-timesyncd
+### Процессы с uid принадлежащим (0,1000) запущены от имени системных служб   
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ date
+Вс 30 мар 2025 10:10:47 MSK
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -p 0 -o pid,ppid,user,cmd
+ошибка: process ID out of range
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -p 1 -o pid,ppid,user,cmd
+    PID    PPID USER     CMD
+      1       0 root     /sbin/init splash
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -e --sort=pid | head -3
+    PID TTY          TIME CMD
+      1 ?        00:00:04 systemd
+      2 ?        00:00:00 kthreadd      
+### процесса с pid = 0 не существует, минимальный pid=1 - принадлежит первому процессу в системе      
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -e --sort=-pid | head -3
+    PID TTY          TIME CMD
+  13187 pts/2    00:00:00 head
+  13186 pts/2    00:00:00 ps
+### Существующие процессы с самым большим pid
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ cat /proc/sys/kernel/pid_max
+4194304
+### Максимально возможный pid в системе
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ date
+Вс 30 мар 2025 10:24:45 MSK
+Пункт 1_4:
+1.4. Проанализируйте множество системных процессов, как их отличить от прочих
+### Системные процессы имеют uid<1000, а также часто ppid=1
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -eo pid,user,uid,ppid,cmd --no-headers | awk '$3 > 0 && $3 < 1000'
+   1104 systemd+   108       1 /usr/lib/systemd/systemd-oomd
+   1106 systemd+   101       1 /usr/lib/systemd/systemd-resolved
+   1108 systemd+   103       1 /usr/lib/systemd/systemd-timesyncd
+   1261 avahi      114       1 avahi-daemon: running [alexander-AORUS-15P-XD.local]
+   1264 message+   102       1 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+   1267 gnome-r+   996       1 /usr/libexec/gnome-remote-desktop-daemon --system
+   1271 polkitd    999       1 /usr/lib/polkit-1/polkitd --no-debug
+   1300 avahi      114    1261 avahi-daemon: chroot helper
+   1383 syslog     104       1 /usr/sbin/rsyslogd -n -iNONE
+   1623 lp           7    1600 /usr/lib/cups/notifier/dbus dbus://
+   1681 cups-br+   130       1 /usr/sbin/cups-browsed
+   1683 kernoops   113       1 /usr/sbin/kerneloops --test
+   1686 kernoops   113       1 /usr/sbin/kerneloops
+   1767 rtkit      116       1 /usr/libexec/rtkit-daemon
+   1898 colord     123       1 /usr/libexec/colord
+### Предположение про uid подтвердилось, а вот ppid=1 далеко не всегда
+### Назначение:
+systemd+ - системные службы, работающие в systemd
+avahi - служба обнаружение устройств в сети
+message+ - коммуникация между приложениями и системными сервисами
+lp - работа с очередями печати
+syslog - собирает логи системы и служб
+kernoops - мониторит /proc на наличие сообщений об ошибках ядра
+rtkit - управление правами доступа некоторых пользовательских приложений
+
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ date
+Вс 30 мар 2025 10:33:11 MSK
+Пункт 1_5:
+Дайте характеристику процессу (например, прародителю всех пользовательских процессов вашей сессии), используя информацию из псевдоФС /proc
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p11_1.c -o proc1
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p11_2.c -o proc2
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p11_3.c -o proc3
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc parent_proc.c -o par_proc
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./par_proc &
+[1] 17543
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ jobs
+[1]+  Запущен          ./par_proc &
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -o pid,ppid,cmd | grep proc
+  17543    6314 ./par_proc
+  17545   17543 ./proc1
+  17546   17543 ./proc2
+  17547   17543 ./proc3
+  17699    6314 grep --color=auto proc
+### Запущены 3 процесса с одним прародителем
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ date
+Вс 30 мар 2025 14:40:44 MSK
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./par_proc &
+[1] 4529
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ cd /proc/4529
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:/proc/4529$ ls
+arch_status  cmdline             environ  ksm_merging_pages  maps        ns             patch_state  sessionid     statm           timerslack_ns
+attr         comm                exe      ksm_stat           mem         numa_maps      personality  setgroups     status          uid_map
+autogroup    coredump_filter     fd       latency            mountinfo   oom_adj        projid_map   smaps         syscall         wchan
+auxv         cpu_resctrl_groups  fdinfo   limits             mounts      oom_score      root         smaps_rollup  task
+cgroup       cpuset              gid_map  loginuid           mountstats  oom_score_adj  sched        stack         timens_offsets
+clear_refs   cwd                 io       map_files          net         pagemap        schedstat    stat          timers
+alexander@alexander-AORUS-15P-XD:/proc/4529$ cat status
+Name:   par_proc
+Umask:  0002
+State:  S (sleeping)
+Tgid:   4529
+Ngid:   0
+Pid:    4529
+PPid:   3811
+TracerPid:      0
+Uid:    1000    1000    1000    1000
+Gid:    1000    1000    1000    1000
+FDSize: 256
+Groups: 1000 
+NStgid: 4529
+NSpid:  4529
+NSpgid: 4529
+NSsid:  3811
+Kthread:        0
+VmPeak:     2636 kB
+VmSize:     2552 kB
+VmLck:         0 kB
+VmPin:         0 kB
+VmHWM:      1280 kB
+VmRSS:      1280 kB
+RssAnon:               0 kB
+RssFile:            1280 kB
+RssShmem:              0 kB
+VmData:       92 kB
+VmStk:       136 kB
+VmExe:         4 kB
+VmLib:      1748 kB
+VmPTE:        40 kB
+VmSwap:        0 kB
+HugetlbPages:          0 kB
+CoreDumping:    0
+THP_enabled:    1
+untag_mask:     0xffffffffffffffff
+Threads:        1
+SigQ:   0/62653
+SigPnd: 0000000000000000
+ShdPnd: 0000000000000000
+SigBlk: 0000000000000000
+SigIgn: 0000000000000000
+SigCgt: 0000000000000000
+CapInh: 0000000000000000
+CapPrm: 0000000000000000
+CapEff: 0000000000000000
+CapBnd: 000001ffffffffff
+CapAmb: 0000000000000000
+NoNewPrivs:     0
+Seccomp:        0
+Seccomp_filters:        0
+Speculation_Store_Bypass:       thread vulnerable
+SpeculationIndirectBranch:      conditional enabled
+Cpus_allowed:   ffff
+Cpus_allowed_list:      0-15
+Mems_allowed:   00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001
+Mems_allowed_list:      0
+voluntary_ctxt_switches:        1
+nonvoluntary_ctxt_switches:     0
+x86_Thread_features:
+x86_Thread_features_locked:
+### Общая информация о процессе
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:/proc/4529$ readlink exe
+/home/alexander/Рабочий стол/os_lb2/par_proc
+### Символьная ссылка на исполняемый файл процесса
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:/proc/4529$ ls -l fd
+итого 0
+lrwx------ 1 alexander alexander 64 мар 30 14:49 0 -> /dev/pts/0
+lrwx------ 1 alexander alexander 64 мар 30 14:49 1 -> /dev/pts/0
+lr-x------ 1 alexander alexander 64 мар 30 14:49 103 -> /snap/code/187/usr/share/code/v8_context_snapshot.bin
+lrwx------ 1 alexander alexander 64 мар 30 14:49 2 -> /dev/pts/0
+l-wx------ 1 alexander alexander 64 мар 30 14:49 37 -> /home/alexander/.config/Code/logs/20250330T144308/ptyhost.log
+vscode_=./par_procalexander@alexander-AORUS-15P-XD:/proc/4529$ cat stat
+4529 (par_proc) S 3811 4529 3811 34816 5241 4194304 155 0 0 0 0 0 0 0 20 0 1 0 20310 2613248 320 18446744073709551615 109484420255744 109484420256493 140732094751552 0 0 0 0 0 0 1 0 0 17 14 0 0 0 0 0 109484420267408 109484420268048 109484444573696 140732094753658 140732094753669 140732094753669 140732094758893 0
+### СТатистика процесса
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:/proc/4529$ cat io
+rchar: 4092
+wchar: 0
+syscr: 9
+syscw: 0
+read_bytes: 0
+write_bytes: 0
+cancelled_write_bytes: 0
+### Информация о вводе/выводе
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./p16.sh 4529 kk
+Имя: 
+Name:   par_proc
+UID: 
+Uid:    1000    1000    1000    1000
+PPID: 
+PPid:   3811
+Память: 
+VmPeak:     2636 kB
+VmSize:     2552 kB
+VmLck:         0 kB
+VmPin:         0 kB
+VmHWM:      1280 kB
+VmRSS:      1280 kB
+VmData:       92 kB
+VmStk:       136 kB
+VmExe:         4 kB
+VmLib:      1748 kB
+VmPTE:        40 kB
+VmSwap:        0 kB
+Исполняемый файл: 
+/home/alexander/Рабочий стол/os_lb2/par_proc
+### Запуск скрипта, выводящего общую информацию о процессе
+[Вс 30 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ date
+Вс 30 мар 2025 15:03:28 MSK
+Пункт 2_1:
+2.1. Создайте программу на основе одного файла (исходного, а затем исполняемого) с псевдораспараллеливанием вычислений
+[Пн 31 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ date
+Пн 31 мар 2025 22:29:14 MSK
+[Пн 31 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p21_1.c -o parallel_procs
+[Пн 31 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p21_2.c -o parallel_cycles
+[Пн 31 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./parallel_procs
+Родительский процесс:
+PID: 18430
+PPID: 3811
+Шаг родительского процесса - 1
+Дочерний процесс:
+PID: 18431
+PPID: 18430
+Шаг дочернего процесса - 1
+Шаг родительского процесса - 2
+Шаг дочернего процесса - 2
+Шаг родительского процесса - 3
+Шаг дочернего процесса - 3
+Шаг родительского процесса - 4
+Шаг дочернего процесса - 4
+Шаг родительского процесса - 5
+Шаг дочернего процесса - 5
+Дочерний процесс завершен
+Родительский процесс завершен
+### Как видно, итерации происходят по очереди
+[Пн 31 мар 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./parallel_procs
+Родительский процесс:
+PID: 19215
+PPID: 3811
+Шаг родительского процесса - 1
+Хрю 0
+Дочерний процесс:
+PID: 19216
+PPID: 19215
+Шаг дочернего процесса - 1
+Щелк 0
+Хрю 1
+Щелк 1
+Хрю 2
+Щелк 2
+Хрю 3
+Щелк 3
+Хрю 4
+Щелк 4
+Хрю 5
+Щелк 5
+Хрю 6
+Щелк 6
+Щелк 7
+Щелк 8
+Шаг родительского процесса - 2
+Хрю 0
+Щелк 9
+Хрю 1
+Хрю 2
+Хрю 3
+Шаг дочернего процесса - 2
+Щелк 0
+Хрю 4
+Щелк 1
+Хрю 5
+Щелк 2
+Хрю 6
+Щелк 3
+Щелк 4
+Щелк 5
+Шаг родительского процесса - 3
+Хрю 0
+Щелк 6
+Хрю 1
+Щелк 7
+Хрю 2
+Щелк 8
+Хрю 3
+Щелк 9
+Хрю 4
+Хрю 5
+Хрю 6
+Шаг дочернего процесса - 3
+Щелк 0
+Щелк 1
+Щелк 2
+Шаг родительского процесса - 4
+Хрю 0
+Щелк 3
+Хрю 1
+Щелк 4
+Хрю 2
+Щелк 5
+Хрю 3
+Щелк 6
+Хрю 4
+Щелк 7
+Хрю 5
+Щелк 8
+Хрю 6
+Щелк 9
+Шаг родительского процесса - 5
+Хрю 0
+Шаг дочернего процесса - 4
+Щелк 0
+Хрю 1
+Щелк 1
+Хрю 2
+Щелк 2
+Хрю 3
+Щелк 3
+Хрю 4
+Щелк 4
+Хрю 5
+Щелк 5
+Хрю 6
+Щелк 6
+Щелк 7
+Щелк 8
+Щелк 9
+Шаг дочернего процесса - 5
+Щелк 0
+Щелк 1
+Щелк 2
+Щелк 3
+Щелк 4
+Щелк 5
+Щелк 6
+Щелк 7
+Щелк 8
+Щелк 9
+Дочерний процесс завершен
+Родительский процесс завершен
+### Ввиду различий процессов и их длительности уже можно наблюдать некоторую борьбу за ресурсы
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ date
+Вт 01 апр 2025 10:59:59 MSK
+Пункт 2_2:
+2.2. Создайте программы родителя и потомка с размещением в разных файлах
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p22_son.c -o p22_son
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p22_father.c -o p22_father
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./p22_father
+Родительский процесс: PID = 25037, PPID = 3811
+Дочерний процесс: PID = 25040, PPID = 25037
+Потомок начал работу: PID = 25040, PPID = 25037
+Потомок завершил работу.
+Родительский процесс завершен
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ cat ps_before.txt
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   25037    3811  0  80   0 -   638 do_wai pts/0    00:00:00 p22_father
+0 S  1000   25038   25037  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   25039   25038  0  80   0 -  2831 -      pts/0    00:00:00 ps
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ cat ps_after.txt
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   25037    3811  0  80   0 -   671 do_wai pts/0    00:00:00 p22_father
+0 S  1000   25040   25037  0  80   0 -   671 hrtime pts/0    00:00:00 p22_son
+0 S  1000   25041   25037  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   25042   25041 99  80   0 -  2831 -      pts/0    00:00:00 ps
+### Запуск в обычном режиме. В таблице процессов сначала появился родитель, а после запуска потомка и сам Потомок
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ./p22_father &
+[1] 25935
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ Родительский процесс: PID = 25935, PPID = 3811
+Дочерний процесс: PID = 25939, PPID = 25935
+Потомок начал работу: PID = 25939, PPID = 25935
+Потомок завершил работу.
+Родительский процесс завершен
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ date
+Вт 01 апр 2025 11:06:41 MSK
+Пункт 2_3:
+2.3. Выполните создание процессов с использованием различных функций семейства exec()
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ touch p23/p23_son.c
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ touch p23/p23_father.c
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p23/p23_father.c -o p23/father
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p23/p23_son.c -o p23/son
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ cd p23
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p23$ ./father
+Родительский процесс: PID = 28932
+Потомок: PID = 28932, PPID = 3811
+Параметры: ./son param1 param2 
+Значение MY_VAR: Hello from Father
+### использование execvp
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p23$ ./father
+Родительский процесс: PID = 34878
+Потомок: PID = 34878, PPID = 3811
+Параметры: son param1 param2 
+Значение MY_VAR: Hello from execle
+### Использование execle
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p23$ ./father
+Родительский процесс: PID = 35039
+Потомок: PID = 35039, PPID = 3811
+Параметры: son param1 param2 
+Значение MY_VAR: Hello from execl
+### Использование execl
+
+Пункт 2_4:
+2.4. Изменяя длительности выполнения родственных процессов и параметры системных вызовов, рассмотрите 3 ситуации
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p24$ gcc p24_father.c -o father
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p24$ ./father a
+[До создания потомка] Состояние процессов:
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   38290    3811  0  80   0 -   671 do_wai pts/0    00:00:00 father
+0 S  1000   38291   38290  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   38292   38291  0  80   0 -  2831 -      pts/0    00:00:00 ps
+Родитель: PID = 38290, ожидает завершения потомка
+Потомок: PID = 38293, PPID = 38290
+
+[После завершения потомка (ситуация а)] Состояние процессов:
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   38290    3811  0  80   0 -   671 do_wai pts/0    00:00:00 father
+0 S  1000   38306   38290  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   38307   38306  0  80   0 -  2831 -      pts/0    00:00:00 ps
+### И родительский процесс и процесс-потомок корректно завершаются.
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p24$ ./father b
+
+[До создания потомка] Состояние процессов:
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   38339    3811  0  80   0 -   671 do_wai pts/0    00:00:00 father
+0 S  1000   38340   38339  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   38341   38340  0  80   0 -  2831 -      pts/0    00:00:00 ps
+Родитель: PID = 38339 завершает работу без ожидания потомка.
+
+[До завершения родителя (ситуация б)] Состояние процессов:
+Потомок: PID = 38342, PPID = 38339
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   38339    3811  0  80   0 -   671 do_wai pts/0    00:00:00 father
+1 S  1000   38342   38339  0  80   0 -   671 hrtime pts/0    00:00:00 father
+0 S  1000   38343   38339  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   38344   38343 99  80   0 -  2831 -      pts/0    00:00:00 ps
+### Дочерний процесс осиротел
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p24$ ps -eo pid,ppid,cmd | grep 40346
+  40594    3811 grep --color=auto 40346
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p24$ cat /proc/3811/status | grep Name
+Name:   bash
+### bash взял его под контроль и процесс завершился
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p24$ ./father c
+
+[До создания потомка] Состояние процессов:
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   38386    3811  0  80   0 -   671 do_wai pts/0    00:00:00 father
+0 S  1000   38387   38386  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   38388   38387 99  80   0 -  2831 -      pts/0    00:00:00 ps
+Родитель: PID = 38386 завершает работу, не дождавшись потомка.
+
+[До завершения родителя (ситуация в)] Состояние процессов:
+Потомок: PID = 38389, PPID = 38386
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   38386    3811  0  80   0 -   671 do_wai pts/0    00:00:00 father
+1 S  1000   38389   38386  0  80   0 -   671 hrtime pts/0    00:00:00 father
+0 S  1000   38390   38386  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   38391   38390 99  80   0 -  2831 -      pts/0    00:00:00 ps
+
+[После завершения родителя (ситуация в)] Состояние процессов:
+F S   UID     PID    PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000    3811    3781  0  80   0 -  2441 do_wai pts/0    00:00:00 bash
+0 S  1000   38386    3811  0  80   0 -   671 do_wai pts/0    00:00:00 father
+1 Z  1000   38389   38386  0  80   0 -     0 -      pts/0    00:00:00 father
+0 S  1000   38433   38386  0  80   0 -   701 do_wai pts/0    00:00:00 sh
+4 R  1000   38434   38433 99  80   0 -  2831 -      pts/0    00:00:00 ps
+### Дочерний процесс превратился в зомби
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p24$ date
+Вт 01 апр 2025 14:45:32 MSK
+Пункт 3_1:
+3.1. С помощью команды kill -l ознакомьтесь с перечнем сигналов, поддерживаемых процессами
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p31/p31_son1.c -o p31/son1
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p31/p31_son2.c -o p31/son2
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p31/p31_son3.c -o p31/son3
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ gcc p31/p31_father.c -o p31/father
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ cd p31
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p31$ ./father
+son1: PID = 46976, PPID = 46975
+son2: PID = 46977, PPID = 46975
+son3: PID = 46978, PPID = 46975
+
+[До отправки сигналов] Состояние процессов:
+Отправка SIGUSR1 процессу son1
+Отправка SIGUSR1 процессу son2
+Отправка SIGUSR1 процессу son3
+
+[После отправки сигналов] Состояние процессов:
+son1: Получен сигнал 10, по умолчанию процесс завершится
+son3: Получен сигнал 10, перехватываем его
+^C
+### Первый процесс просто завершается по умолчанию
+### Второй процесс не реагирует на сигнал и работает бесконечно
+### Третий процесс производит собственную обработку сигнала, сценарий для которой пользователь может создать сам
+Пункт 3_2:
+3.2. Проанализируйте значение, возвращаемое функцией wait(&status). Как связана wait() с SIGCHLD
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p32$ gcc p32_wait.c -o wait
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p32$ ./wait
+Дочерний процесс: PID = 49025
+Процесс завершился с кодом: 40
+### wait изменяет переменную status. Из этой переменной с помощью функций можно извлечь информацию о завершении процесса: код возврата, сигнал возврата и тп.
+### Связь с SIGHLD. SIGHLD посылается процессу-родителю, когда дочерний процесс завершает выполнение. 
+### Если процесс-родитель не вызывает wait и не обрабатывает SIGHLD, то дочерний процесс становится зомби.
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p32$ gcc p32_waitpid.c -o waitpid
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p32$ ./waitpid
+Ожидаем завершение дочернего процесса 1
+Дочерний процесс 1: PID = 50864
+Дочерний процесс 2: PID = 50865
+Процесс 1 завершён с кодом: 10
+Ожидаем завершение дочернего процесса 2
+Процесс 2 завершён с кодом: 20
+### waitpid позволяет ожидать завершение конкретного процесса по pid. 
+4. Подготовьте программу, формирующую несколько нитей (потоков).
+Пункт 4_2:
+[Вт 01 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p32$ date
+Вт 01 апр 2025 16:49:18 MSK
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p41$ date
+Пт 04 апр 2025 21:30:34 MSK
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p41$ gcc -o threads p41.c -pthread
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p41$ ./threads > output.txt &
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p4$ ls -l /proc/14844/task
+итого 0
+dr-xr-xr-x 7 alexander alexander 0 апр  4 21:54 16134
+dr-xr-xr-x 7 alexander alexander 0 апр  4 21:54 16136
+dr-xr-xr-x 7 alexander alexander 0 апр  4 21:54 16137
+dr-xr-xr-x 7 alexander alexander 0 апр  4 21:54 16138
+### Tid являются подкаталогами процесса
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p4$ cat /proc/16134/task/16136/stat
+16136 (threads) R 3862 16134 3862 34816 16229 4194368 3 0 0 0 2410 0 0 0 20 0 4 0 1626405 27926528 384 18446744073709551615 103116011483136 103116011486725 140731447969648 0 0 0 0 0 0 0 0 0 -1 14 0 0 0 0 0 103116011494704 103116011495440 103116015067136 140731447978820 140731447978830 140731447978830 140731447984110 0
+### Содержит состояние, CPU, память и другие данные для потока
+### Идентификация: pthread создают потоки с уникальными TID, но общим PID. Данные thread можно посмотреть обычными способами, я использовал напрямую каталог /proc
+### Распределение во времени: Потоки выполняются параллельно, так как система многоядерная, в среднем потоки выполняются за одинаковое время
+### Оба метода наследуют память, дескрипторы, сигналы. clone с CLONE_THREAD ведет себя аналогично pthread
+### pthread более высокоуровневый и простой в использовании, тогда как clone требует ручного выделения стека, но более гибок
+Пункт 4_3:
+4.3. Проанализируйте ресурсы, разделяемые нитями одного процесса
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p4$ gcc -o threads3 p43.c -pthread
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p4$ ./threads3 > output3.txt
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p4$ cat thread_output.txt
+pthread TID=19659, thread 3 wrote this
+pthread TID=19657, thread 1 wrote this
+pthread TID=19658, thread 2 wrote this
+clone TID=19660, thread 1 wrote this
+clone TID=19662, thread 3 wrote this
+clone TID=19661, thread 2 wrote this
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p4$ cat output3.txt
+Main process PID=19656
+Creating pthreads...
+pthread TID=19657, thread 1: incremented shared_counter to 1
+pthread TID=19658, thread 2: incremented shared_counter to 2
+pthread TID=19659, thread 3: incremented shared_counter to 3
+pthread TID=19657, thread 1: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+pthread TID=19659, thread 3: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+pthread TID=19658, thread 2: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+All pthreads completed.
+
+Creating clone threads...
+clone TID=19660, thread 1: incremented shared_counter to 4
+clone TID=19660, thread 1: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+clone T10 received by TID=19656
+### Подтверждение поведения сигналов. Только одна нить обработала сигнал
+clone TID=19661, thread 2: incremented shared_counter to 6
+clone TID=19661, thread 2: current directory = /home/alexander/Рабочий стол/os_lb2/p4
+All clone threads completed.
+### Подтверждение разделения АП. Все нити видят и разделяют одну и ту же переменную
+Contents of thread_output.txt:
+pthread TID=19659, thread 3 wrote this
+pthread TID=19657, thread 1 wrote this
+pthread TID=19658, thread 2 wrote this
+clone TID=19660, thread 1 wrote this
+clone TID=19662, thread 3 wrote this
+clone TID=19661, thread 2 wrote this
+### Подтверждение разделения файловых дескрипторов. Все записи добавляются в один файл без перезаписи
+### Все нити выводят одну и ту же директорию, что подтверждает разделение атрибутов фс
+### PID одинаков у всех потоков, но TID разные
+Пункт 4_4:
+Попробуйте удалить одну из нитей, зная ее идентификатор, командой kill
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p4$ gcc -o threads4 p44.c -pthread
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p4$ ./threads4 > output4.txt
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -eL | grep threads
+  28239   28239 pts/0    00:00:00 threads4
+  28239   28240 pts/0    00:00:00 threads4
+  28239   28241 pts/0    00:00:00 threads4
+  28239   28242 pts/0    00:00:00 threads4
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ kill -SIGTERM 28241
+[Пт 04 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -eL | grep threads
+  28239   28239 pts/0    00:00:00 threads4
+  28239   28240 pts/0    00:00:01 threads4
+  28239   28242 pts/0    00:00:01 threads4
+### Был написан обработчик для сигнала SIGTERM, чтобы завершать отдельные нити.
+### Как видно в примере и в выводе файла нить с tid=28241 была завершена вручную, остальные продолжили работу
+Пункт 5_1:
+5.1. Определите политику планирования и приоритет, установленные по умолчанию
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ ps -eo pid,tid,psr,policy,pri,nice,comm | grep proc1
+  31829   31829  12 TS   19   0 proc1
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ chrt -p 31829
+pid 31829's current scheduling policy: SCHED_OTHER
+pid 31829's current scheduling priority: 0
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2$ 
+### По умолчанию процессы имеют параметр nice=0, приоритет 19, политику планирования TS
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ date
+Сб 05 апр 2025 11:58:32 MSK
+
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ gcc -o sched_test p512.c
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ nice -n 5 ./sched_test &
+[1] 43877
+### Изменяем параметр nice
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ ps -eo pid,tid,psr,policy,pri,nice,comm | grep sched_test
+  43877   43877  13 TS   14   5 sched_test
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ cat output5.txt
+[1]+  Завершён        nice -n 5 ./sched_test
+PID = 43877, TID = 43877, PRI = 14
+Scheduling policy: SCHED_OTHER
+Nice: 5
+### Выходные результаты совпадают
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ date
+Сб 05 апр 2025 14:36:35 MSK
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ gcc -o planir p511.c
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ taskset -c 0 ./planir
+Main process PID=45112, TID=45112
+Policy: 0 (0=SCHED_OTHER), Priority: 19, Nice: 0
+MThread TID=45113 (A) started
+AThread TID=45114 (B) started
+BThread TID=45115 (C) started
+CABCMCBMABMACBMAACCBBAMMCBAMMCCABAMBBCCMMAABCAAMCCBBMACBMMCABBCAMCABMMMCCAABBCMABCCBMMAABCMAABCCMBBMAMCBAAMMCCBBAAMCBMACCBMMABABCCMABCBMAABMMCCABMACCBMMABCABMCCMABBMAACBMCABBAMMCCAMCBBAMMCBAAMCCBABMMCBAAMCCBAMCBBAAMMCCBAMABBCMABCCMMBAACBMMACCBMACABBMMAACCBMBBACCMMABCAABMMCABBMCCAMMBBCAACCMBAMMCBBAACMCBMABBMAACCMMBAACMBBCCAMBAACMMBBACCMBBCAAMCCMBMAACMBBACCMMBAMCBBAACCMBMABMCAABMMCAABBMCCABMCAB
+Main thread completed
+C
+Thread TID=45115 (C) completed
+
+Thread TID=45113 (A) completed
+B
+Thread TID=45114 (B) completed
+All threads completed
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ taskset -c 0 ./planir
+Main process PID=45198, TID=45198
+Policy: 0 (0=SCHED_OTHER), Priority: 19, Nice: 0
+MThread TID=45199 (A) started
+AThread TID=45200 (B) started
+BThread TID=45201 (C) started
+CABCMAMCBBACMBMCAMCAMBCABMCBAMBACCMMBAACBAMBCCBMACMABMABBCCMMAABCMCABCMBBMAACCMBACMMCBAACBBAMCAMMBCCBAAMMCBAABMCCBMACBBAMMCCBAAMCBBAAMMCCBAMBCBAAMMCCBBMCABAAMMCCABBMCAMMCBAABCMBBCCAAMBCAMMBCCAMBBCAAMBCAMMBCAMCBBACCMMABCABBMACMMABACCMBBAACCMMBACMAABBMCAMBCCMMBAACCBMBAACMBABCCMBMAMCCBAAMCBABMMCBACMBBCMAACMBAMBCCABMMBCCAAMBCAABBMMCACBMAACMBBCAMMBCCAAMCBBAMMCCABBMMCAABMCABBCCMMABMCCAABBMCCMBAAMB
+Thread TID=45201 (C) completed
+M
+Main thread completed
+AB
+Thread TID=45200 (B) completed
+
+Thread TID=45199 (A) completed
+All threads completed
+### Можно заметить, что процесс рапределяется по нитям почти равномерно
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ 
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p51$ date
+Сб 05 апр 2025 15:45:20 MSK
+Пункт 5_2:
+5.2. Ознакомьтесь с выполнением команды nice(1) и системного вызова getpriority(2)
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p52$ gcc p52.c -o priority
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p52$ taskset -c 0 ./priority
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p52$ cat out.txt
+Дочерний процесс 1 (PID: 58097)
+nice = 0
+Дочерний процесс 1 завершен. Время выполнения: 54.053 секунд
+Дочерний процесс 4 (PID: 58100)
+nice = 10
+Дочерний процесс 4 завершен. Время выполнения: 107.893 секунд
+Дочерний процесс 3 (PID: 58099)
+nice = 19
+Дочерний процесс 3 завершен. Время выполнения: 188.604 секунд
+Дочерний процесс 2 (PID: 58098)
+nice = 19
+Дочерний процесс 2 завершен. Время выполнения: 188.667 секунд
+Дочерние процессы завершены
+### По результатам эксперимента можно понять, что процесс с высоким приоритетом выполняется быстрее, чем с более низкими. Как и ожидалось
+Пункт 5_3:
+5.3. Измените процедуру планирования на FIFO
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ gcc -o execute p531.c
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ sudo taskset -c 0 ./execute
+Процесс 2 (PID: 5396) начал выполнение с приоритетом 10
+Процесс 2 завершён. Время: 0.087 секунд
+Процесс 3 (PID: 5397) начал выполнение с приоритетом 10
+Процесс 3 завершён. Время: 0.044 секунд
+Процесс 1 (PID: 5395) начал выполнение с приоритетом 10
+Процесс 1 завершён. Время: 0.045 секунд
+Процесс 4 (PID: 5398) начал выполнение с приоритетом 10
+Процесс 4 завершён. Время: 0.046 секунд
+Все процессы завершены.
+### Наблюдается типичный FIFO, первый процесс первым и обработан и первым выполнен, поскольку сложность у всех одна и та же
+
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ gcc -o execute2 p532.c
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ ./execute2
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ sudo ./execute2
+[Сб 05 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ cat out2.txt
+Minimal nice = 1
+Maximal nice = 99
+### Полученные экспериментально границы приоритетов
+
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ date
+Вс 06 апр 2025 01:52:56 MSK
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ gcc -o execute3 p533.c
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p53$ sudo taskset -c 0 ./execute3
+Процесс 1 (PID: 13053) начал выполнение с приоритетом 10
+Процесс 2 (PID: 13054) начал выполнение с приоритетом 99
+Процесс 3 (PID: 13055) начал выполнение с приоритетом 1
+Процесс 4 (PID: 13056) начал выполнение с приоритетом 50
+Процесс 2 завершён. Время: 72.857 секунд
+Процесс 4 завершён. Время: 155.454 секунд
+Процесс 1 завершён. Время: 237.210 секунд
+Процесс 3 завершён. Время: 309.484 секунд
+Все процессы завершены.
+### Приоритеты заставили процессы начать перебивать друг друга и завершиться в порядке приоритета
+Пункт 5_4:
+Измените процедуру планирования на RR
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p54$ gcc -o execute p541.c
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p54$ sudo taskset -c 0 ./execute
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p54$ date
+Вс 06 апр 2025 09:14:08 MSK
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p54$ cat out.txt
+Процесс 1 (PID: 7179) начал выполнение с приоритетом 10
+Процесс 1 работает
+Процесс 1 работает
+Процесс 1 работает
+Процесс 2 (PID: 7180) начал выполнение с приоритетом 10
+Процесс 2 работает
+Процесс 3 (PID: 7181) начал выполнение с приоритетом 10
+Процесс 3 работает
+Процесс 4 (PID: 7182) начал выполнение с приоритетом 10
+Процесс 4 работает
+Процесс 1 работает
+Процесс 2 работает
+Процесс 3 работает
+Процесс 4 работает
+Процесс 1 работает
+Процесс 2 работает
+Процесс 3 работает
+Процесс 4 работает
+Процесс 1 работает
+Процесс 2 работает
+Процесс 3 работает
+Процесс 4 работает
+Процесс 1 работает
+Процесс 2 работает
+Процесс 3 работает
+Процесс 4 работает
+Процесс 1 завершён. Время: 9.974 секунд
+Процесс 2 работает
+Процесс 3 работает
+Процесс 4 работает
+Процесс 2 работает
+Процесс 3 работает
+Процесс 4 работает
+Процесс 2 завершён. Время: 12.075 секунд
+Процесс 3 завершён. Время: 12.121 секунд
+Процесс 4 завершён. Время: 12.207 секунд
+Все процессы завершены.
+### Вот она, циклическая работа, характерная для RR. 
+### В этом типе планирования каждый процесс отрабатывает определенное время, после чего становится в конец очереди. 
+
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p54$ gcc -o execute p542.c
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p54$ sudo ./execute
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p54$ cat out2.txt
+Minimal nice = 1
+Maximal nice = 99
+### границы приоритетов соответствуют таковым у FIFO.
+
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p54$ cat out3.txt
+Процесс 3 (PID: 10473) начал выполнение с приоритетом 30
+Процесс 3 работает
+Процесс 3 работает
+Процесс 3 работает
+Процесс 3 работает
+Процесс 4 (PID: 10474) начал выполнение с приоритетом 40
+Процесс 4 работает
+Процесс 1 (PID: 10471) начал выполнение с приоритетом 10
+Процесс 1 работает
+Процесс 2 (PID: 10472) начал выполнение с приоритетом 20
+Процесс 2 работает
+Процесс 4 работает
+Процесс 4 работает
+Процесс 4 работает
+Процесс 4 работает
+Процесс 4 работает
+Процесс 4 работает
+Процесс 4 завершён. Время: 3.485 секунд
+Процесс 3 работает
+Процесс 3 работает
+Процесс 3 работает
+Процесс 3 завершён. Время: 6.788 секунд
+Процесс 2 работает
+Процесс 2 работает
+Процесс 2 работает
+Процесс 2 работает
+Процесс 2 работает
+Процесс 2 работает
+Процесс 2 завершён. Время: 8.417 секунд
+Процесс 1 работает
+Процесс 1 работает
+Процесс 1 работает
+Процесс 1 работает
+Процесс 1 работает
+Процесс 1 работает
+Процесс 1 завершён. Время: 11.834 секунд
+Все процессы завершены
+### При разных приоритетах не отличается от FIFO, поскольку RR соблюдается только при равных приоритетах
+### Эксперимент показал, что для приоритета 10 один квант равен 0.08 секунд
+### sched_yield() изменяет порядок в очереди процессов RR. 
+Пункт 5_5:
+5.5. Можно ли задать разные процедуры планирования разным процессам с одинаковыми приоритетами
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p55$ date
+Вс 06 апр 2025 11:10:27 MSK
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p55$ gcc -o execute p55.c
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p55$ sudo ./execute
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p55$ cat out.txt
+Процесс 1 (PID: 19250) начал выполнение с приоритетом 10
+Процесс 1 выполняется
+Процесс 1 выполняется
+Процесс 1 выполняется
+Процесс 1 выполняется
+Процесс 1 выполняется
+Процесс 1 выполняется
+Процесс 1 выполняется
+Процесс 1 выполняется
+Процесс 2 (PID: 19251) начал выполнение с приоритетом 10
+Процесс 2 выполняется
+Процесс 3 (PID: 19252) начал выполнение с приоритетом 10
+Процесс 3 выполняется
+Процесс 4 (PID: 19253) начал выполнение с приоритетом 10
+Процесс 4 выполняется
+Процесс 3 выполняется
+Процесс 3 выполняется
+Процесс 3 выполняется
+Процесс 3 выполняется
+Процесс 3 выполняется
+Процесс 3 выполняется
+Процесс 3 выполняется
+Процесс 3 выполняется
+Процесс 3 выполняется
+
+Процесс 3 завершён. Время: 1.724 секунд
+Процесс 4 выполняется
+Процесс 4 выполняется
+Процесс 4 выполняется
+Процесс 4 выполняется
+Процесс 4 выполняется
+Процесс 4 выполняется
+Процесс 4 выполняется
+Процесс 4 выполняется
+Процесс 4 выполняется
+
+Процесс 4 завершён. Время: 3.324 секунд
+Процесс 1 выполняется
+Процесс 2 выполняется
+Процесс 1 выполняется
+Процесс 2 выполняется
+
+Процесс 1 завершён. Время: 5.142 секунд
+Процесс 2 выполняется
+Процесс 2 выполняется
+Процесс 2 выполняется
+Процесс 2 выполняется
+Процесс 2 выполняется
+Процесс 2 выполняется
+Процесс 2 выполняется
+
+Процесс 2 завершён. Время: 5.198 секунд
+Все процессы завершены.
+
+### Несколько экспериментов показали, что между RR и FIFO при одинаковых приоритетах FIFO получает преимущество, поскольку рано или поздно перехватывает инициативу, но обратно не возвращает
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p56$ gcc -o execute p56.c -pthread
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p56$ sudo taskset -c 0 ./execute > out.txt
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p56$ cat out.txt
+Эксперимент 1: Политика по умолчанию
+Поток 1 (TID: 139135306172096): политика 0, приоритет 0
+Поток 1 работает (итерация 0)
+Поток 2 (TID: 139135295686336): политика 0, приоритет 0
+Поток 2 работает (итерация 0)
+Поток 3 (TID: 139135285200576): политика 0, приоритет 0
+Поток 3 работает (итерация 0)
+Поток 3 работает (итерация 100000000)
+Поток 2 работает (итерация 100000000)
+Поток 1 работает (итерация 100000000)
+Поток 3 работает (итерация 200000000)
+Поток 2 работает (итерация 200000000)
+Поток 1 работает (итерация 200000000)
+Поток 3 работает (итерация 300000000)
+Поток 2 работает (итерация 300000000)
+Поток 1 работает (итерация 300000000)
+Поток 3 работает (итерация 400000000)
+Поток 2 работает (итерация 400000000)
+Поток 1 работает (итерация 400000000)
+Поток 3 работает (итерация 500000000)
+Поток 2 работает (итерация 500000000)
+Поток 1 работает (итерация 500000000)
+Поток 3 работает (итерация 600000000)
+Поток 2 работает (итерация 600000000)
+Поток 1 работает (итерация 600000000)
+Поток 3 завершён
+Поток 2 завершён
+Поток 1 завершён
+Эксперимент 1 завершён
+### Планирование по умолчанию назначает приоритет 0
+
+Эксперимент 2: Все потоки с SCHED_RR, приоритет 50
+Поток 1 (TID: 139135285200576): политика 2, приоритет 50
+Поток 1 работает (итерация 0)
+Поток 1 работает (итерация 100000000)
+Поток 1 работает (итерация 200000000)
+Поток 1 работает (итерация 300000000)
+Поток 1 работает (итерация 400000000)
+Поток 1 работает (итерация 500000000)
+Поток 1 работает (итерация 600000000)
+Поток 1 завершён
+Поток 2 (TID: 139135295686336): политика 2, приоритет 50
+Поток 2 работает (итерация 0)
+Поток 2 работает (итерация 100000000)
+Поток 2 работает (итерация 200000000)
+Поток 2 работает (итерация 300000000)
+Поток 2 работает (итерация 400000000)
+Поток 3 (TID: 139135306172096): политика 2, приоритет 50
+Поток 3 работает (итерация 0)
+Поток 2 работает (итерация 500000000)
+Поток 3 работает (итерация 100000000)
+Поток 2 работает (итерация 600000000)
+Поток 3 работает (итерация 200000000)
+Поток 2 завершён
+Поток 3 работает (итерация 300000000)
+Поток 3 работает (итерация 400000000)
+Поток 3 работает (итерация 500000000)
+Поток 3 работает (итерация 600000000)
+Поток 3 завершён
+Эксперимент 2 завершён
+### При назначении всем потокам RR, они работают по обычным RR. 
+
+Эксперимент 3: Поток 1 - SCHED_RR, остальные - SCHED_OTHER
+Поток 1 (TID: 139135306172096): политика 2, приоритет 50
+Поток 1 работает (итерация 0)
+Поток 1 работает (итерация 100000000)
+Поток 1 работает (итерация 200000000)
+Поток 2 (TID: 139135295686336): политика 0, приоритет 0
+Поток 2 работает (итерация 0)
+Поток 3 (TID: 139135285200576): политика 0, приоритет 0
+Поток 3 работает (итерация 0)
+Поток 1 работает (итерация 300000000)
+Поток 1 работает (итерация 400000000)
+Поток 1 работает (итерация 500000000)
+Поток 1 работает (итерация 600000000)
+Поток 1 завершён
+Поток 2 работает (итерация 100000000)
+Поток 3 работает (итерация 100000000)
+Поток 2 работает (итерация 200000000)
+Поток 3 работает (итерация 200000000)
+Поток 2 работает (итерация 300000000)
+Поток 3 работает (итерация 300000000)
+Поток 2 работает (итерация 400000000)
+Поток 3 работает (итерация 400000000)
+Поток 2 работает (итерация 500000000)
+Поток 3 работает (итерация 500000000)
+Поток 2 работает (итерация 600000000)
+Поток 3 работает (итерация 600000000)
+Поток 2 завершён
+Поток 3 завершён
+Эксперимент 3 завершён
+### Здесь мы установили RR только потоку 1.
+### Как видно, он имеет преимущества перед обычными потоками. Потому что процессы реального времени изначально приоритетнее, чем обычные
+### Результат экс-та 1 совпадает с результатами п. 5_1, процессы выполняются стандартно примерно равномерно
+### Результат экс-та 2 совпадает с результатами п. 5_4, процессы работают по принципу RR
+### Результат ожидаем, процессы реального времени приоритетнее
+
+Пункт 5_62:
+5.6. Для потоков одного процесса определите политику планирования по умолчанию
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p56$ gcc -o execute_procs p562_processes.c
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p56$ sudo taskset -c 0 ./execute_procs > procs.txt
+[sudo] пароль для alexander: 
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p56$ gcc -o execute_threads p562_threads.c -pthread
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p56$ sudo taskset -c 0 ./execute_threads > threads.txt
+### Нити отличаются от независимых потоков тем, что делят один ресурс. На планировку это не влияет.
+### Это подтверждается экспериментами, распределение выполнения работает также.
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p56$ date
+Вс 06 апр 2025 13:06:11 MSK
+
+Пункт 6_1:
+Проанализируйте наследование на этапах fork() и exec(). Проведите эксперименты с родителем и потомками
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p61$ gcc -o execute1 p61.c
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p61$ ./execute1 > out1.txt
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p61$ cat testfile.txt
+Родитель: до fork
+Потомок: после fork
+Родитель: после fork
+alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p61$ cat out1.txt
+Потомок: после exec >> testfile.txt
+Родитель: текущая позиция в файле = 94
+### Потомок наследует от родителя файловые дескрипторы и они вдвоем вполне успешно записывают в один файл.
+### После exec файловые дескрипторы также сохранились
+Пункт 6_2:
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p62$ gcc -o execute p62.c
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p62$ ./execute > out.txt
+  SCHED_RR  : Operation not permitted
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p62$ sudo ./execute > out.txt
+[sudo] пароль для alexander: 
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p62$ cat out.txt
+После exec: PID 27244, политика 2, приоритет 50, nice 0
+Родитель до fork: PID 27243,  2,  50, nice 0
+Родитель после fork: PID 27243,  2,  50, nice 0
+### Процесс-ребенок наследовал приоритет родителя и его политику
+Пункт 6_3:
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p63$ gcc -o parent parent.c
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p63$ ./parent > out.txt
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p63$ cat out.txt
+После exec (PID 34592): Жду SIGUSR1
+После exec: Получен SIGUSR1, но обработчик сбросился
+Родитель (PID 34591): Установлен обработчик для SIGUSR1
+Родитель (PID 34591): Получен SIGUSR2 от потомка, отправляю SIGUSR1
+### потомок наследует диспозицию сигналов, но обработчики сбрасываются
+
+Пункт 6_4:
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p64$ gcc clone_behave.c -o execute
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p64$ sudo ./execute > out.txt
+[Вс 06 апр 2025]alexander@alexander-AORUS-15P-XD:~/Рабочий стол/os_lb2/p64$ cat out.txt
+Родитель (PID 39982): политика 2, приоритет 50
+Эксперимент 1: clone без разделения
+Эксперимент 2: clone с CLONE_FILES | CLONE_SIGHAND
+Потомок (PID 39984): политика 2, приоритет 50
+PID 39984: Получен сигнал 10
+### clone предоставляет больше гибкости
+### Флагом CLONE_FILES можно сделать, чтобы файлы разделялись
+### Приоритеты и политика наследуются всегда
+### Флагом CLONE_SIGHAND можно сделать, чтобы сигналы разделялись

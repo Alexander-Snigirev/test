@@ -1,0 +1,42 @@
+Main process PID=16134
+Creating pthreads...
+pthread TID=16136, PID=16134, CPU=12, thread 1: iteration 0, sum = 0
+pthread TID=16137, PID=16134, CPU=0, thread 2: iteration 0, sum = 0
+pthread TID=16138, PID=16134, CPU=5, thread 3: iteration 0, sum = 0
+pthread TID=16137, PID=16134, CPU=8, thread 2: iteration 2000000000, sum = 9000000000
+pthread TID=16136, PID=16134, CPU=4, thread 1: iteration 2000000000, sum = 9000000000
+pthread TID=16138, PID=16134, CPU=5, thread 3: iteration 2000000000, sum = 9000000000
+pthread TID=16137, PID=16134, CPU=0, thread 2: iteration 4000000000, sum = 18000000000
+pthread TID=16136, PID=16134, CPU=4, thread 1: iteration 4000000000, sum = 18000000000
+pthread TID=16138, PID=16134, CPU=5, thread 3: iteration 4000000000, sum = 18000000000
+pthread TID=16137, PID=16134, CPU=8, thread 2: iteration 6000000000, sum = 27000000000
+pthread TID=16138, PID=16134, CPU=5, thread 3: iteration 6000000000, sum = 27000000000
+pthread TID=16136, PID=16134, CPU=6, thread 1: iteration 6000000000, sum = 27000000000
+pthread TID=16137, PID=16134, CPU=8, thread 2: iteration 8000000000, sum = 36000000000
+pthread TID=16138, PID=16134, CPU=13, thread 3: iteration 8000000000, sum = 36000000000
+pthread TID=16136, PID=16134, CPU=14, thread 1: iteration 8000000000, sum = 36000000000
+pthread TID=16136 completed, final sum = 45000000000, time = 30.972 sec
+pthread TID=16137 completed, final sum = 45000000000, time = 30.985 sec
+pthread TID=16138 completed, final sum = 45000000000, time = 31.018 sec
+All pthreads completed.
+
+Creating clone threads...
+clone TID=16263, PID=16134, CPU=15, thread 1: iteration 0, sum = 0
+clone TID=16264, PID=16134, CPU=15, thread 2: iteration 0, sum = 0
+clone TID=16265, PID=16134, CPU=15, thread 3: iteration 0, sum = 0
+clone TID=16264, PID=16134, CPU=15, thread 2: iteration 2000000000, sum = 9000000000
+clone TID=16263, PID=16134, CPU=15, thread 1: iteration 2000000000, sum = 9000000000
+clone TID=16265, PID=16134, CPU=15, thread 3: iteration 2000000000, sum = 9000000000
+clone TID=16264, PID=16134, CPU=15, thread 2: iteration 4000000000, sum = 18000000000
+clone TID=16263, PID=16134, CPU=15, thread 1: iteration 4000000000, sum = 18000000000
+clone TID=16265, PID=16134, CPU=15, thread 3: iteration 4000000000, sum = 18000000000
+clone TID=16264, PID=16134, CPU=15, thread 2: iteration 6000000000, sum = 27000000000
+clone TID=16263, PID=16134, CPU=15, thread 1: iteration 6000000000, sum = 27000000000
+clone TID=16265, PID=16134, CPU=15, thread 3: iteration 6000000000, sum = 27000000000
+clone TID=16264, PID=16134, CPU=15, thread 2: iteration 8000000000, sum = 36000000000
+clone TID=16263, PID=16134, CPU=15, thread 1: iteration 8000000000, sum = 36000000000
+clone TID=16265, PID=16134, CPU=15, thread 3: iteration 8000000000, sum = 36000000000
+clone TID=16264 completed, final sum = 45000000000, time = 30.842 sec
+clone TID=16263 completed, final sum = 45000000000, time = 30.885 sec
+clone TID=16265 completed, final sum = 45000000000, time = 31.145 sec
+All clone threads completed.

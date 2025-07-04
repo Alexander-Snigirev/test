@@ -1,0 +1,3 @@
+PID = 43877, TID = 43877, PRI = 14
+Scheduling policy: SCHED_OTHER
+Nice: 5
